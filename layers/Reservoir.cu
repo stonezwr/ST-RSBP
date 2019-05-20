@@ -1169,7 +1169,6 @@ __device__ float d_Reservoir_accumulate_spikes(
 		int index = connection[i+o_idx*outputSize];
 		if(index < 0)
 			break;
-		assert(weights_lat[index+o_idx*outputSize] != 0);
 		response += output[index + (t - 1) * outputSize] ? weights_lat[index + o_idx * outputSize] : 0;
 	}
 
@@ -1415,10 +1414,10 @@ __global__ void g_Reservoir_effect_ratio_LHS(
 			if(i_idx==o_idx){
 
 				float sum = 1 - sumEffectReservoir[o_idx] - sumEffectInput[o_idx];
-				if(sum>=0 && sum<0.0001)
-					sum=0.0001;
-				if(sum<0 && sum>-0.0001)
-					sum=-0.0001;
+				if(sum>=0 && sum<1e-4)
+					sum=1e-4;
+				if(sum<0 && sum>-1e-4)
+					sum=-1e-4;
 				m_LHS[i_idx + o_idx*outputSize] = sum;
 			}else{
 				float w = w_l[i_idx + o_idx * outputSize];
@@ -1795,10 +1794,10 @@ __global__ void g_Reservoir_wgrad_spiketime(
         if(i_idx < inputSize)
         {
 			float sum = 1-sumEffectReservoir[o_idx] - sumEffectInput[o_idx];
-			if(sum>=0 && sum<0.0001)
-				sum=0.0001;
-			if(sum<0 && sum>-0.0001)
-				sum=-0.0001;
+			if(sum>=0 && sum<1e-4)
+				sum=1e-4;
+			if(sum<0 && sum>-1e-4)
+				sum=-1e-4;
             float compen_effect = acc_effect[i_idx + o_idx * inputSize]/sum;
 
             float delta_w = delta * compen_effect;
@@ -1839,10 +1838,10 @@ __global__ void g_Reservoir_wgrad_spiketime_reservoir(
 			if(w!=0){
 				float delta = cDelta[o_idx];
 				float sum = 1-sumEffectReservoir[o_idx] - sumEffectInput[o_idx];
-				if(sum>=0 && sum<0.0001)
-					sum=0.0001;
-				if(sum<0 && sum>-0.0001)
-					sum=-0.0001;
+				if(sum>=0 && sum<1e-4)
+					sum=1e-4;
+				if(sum<0 && sum>-1e-4)
+					sum=-1e-4;
 
             	float compen_effect = reservoirEffect[i_idx + o_idx * outputSize]/sum;
             	float delta_w = delta * compen_effect;
