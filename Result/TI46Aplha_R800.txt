@@ -1,0 +1,3446 @@
+
+
+*******************CONFIG*******************
+Is Gradient Checking : 0
+Allow Dynamic Threshold : 0
+Has Boost Weight Train: 1
+Use Effect Ratio      : 1
+Use Optimizer         : adam
+lambda                : 0.000000
+beta                  : 0.000000
+weight limit          : 8.000000
+batch Size            : 1
+channels              : 1
+crop                  : -1
+scale                 : 0.000000
+rotation              : 0.000000
+distortion            : 0.000000
+imageShow             : 0
+HORIZONTAL            : 0
+Test_Epoch            : 150
+White Noise           : 0.000000
+Spike end time        : 700
+Train data path       : ../../../data_new/ti_alpha/train/
+Test data path        : ../../../data_new/ti_alpha/test/
+Train samples         : 4142
+Test samples          : 6628
+Train samples per class : -1
+Test samples per class  : -1
+
+
+********data spiking Layer********
+NAME          : data
+INPUT_NEURONS : 78
+
+
+********RESERVOIR Layer********
+NAME               : reservoir
+NUM_NEURONS        : 800
+INPUT              : data
+VTH                : 8.000000
+T_REFRAC           : 2
+TAU_M              : 128.000000
+TAU_S              : 8.000000
+initW              : 1.000000
+Train_Reservoir    : 1
+weightConnect      : 0
+initType           : Bernoulli
+weightPath         : NULL
+lweightPath        : NULL
+laterialType       : RESERVOIR
+reservoirDim       : 10x10x8
+localInbStrength   : 0.000000
+UNDESIRED_LEVEL    : 0.000000
+DESIRED_LEVEL      : 0.000000
+MARGIN             : 0.000000
+selfLoopStrength	: 0.000000
+selfLoopRatio	    : 0.000000
+refWeightPath      : NULL
+refLWeightPath     : NULL
+refOuputTrainPath  : NULL
+refOutputTestPath  : NULL
+ADD_BIAS           : 0
+BIAS_FREQ          : 100000
+
+
+********SPIKING Layer********
+NAME               : hidden_1
+NUM_NEURONS        : 400
+INPUT              : reservoir
+VTH                : 8.000000
+T_REFRAC           : 2
+TAU_M              : 128.000000
+TAU_S              : 8.000000
+initW              : 1.000000
+weightConnect      : 0
+initType           : Bernoulli
+weightPath         : NULL
+lweightPath        : NULL
+laterialType       : NULL
+reservoirDim       : NULL
+localInbStrength   : 0.000000
+UNDESIRED_LEVEL    : 0.000000
+DESIRED_LEVEL      : 0.000000
+MARGIN             : 0.000000
+selfLoopStrength	: 0.000000
+selfLoopRatio	    : 1.000000
+refWeightPath      : NULL
+refLWeightPath     : NULL
+refOuputTrainPath  : NULL
+refOutputTestPath  : NULL
+ADD_BIAS           : 0
+BIAS_FREQ          : 100000
+
+
+********SPIKING Layer********
+NAME               : output
+NUM_NEURONS        : 26
+INPUT              : hidden_1
+VTH                : 8.000000
+T_REFRAC           : 2
+TAU_M              : 128.000000
+TAU_S              : 8.000000
+initW              : 1.000000
+weightConnect      : 0
+initType           : Bernoulli
+weightPath         : NULL
+lweightPath        : NULL
+laterialType       : LOCAL_INHIBITION
+reservoirDim       : NULL
+localInbStrength   : 1.000000
+UNDESIRED_LEVEL    : 5.000000
+DESIRED_LEVEL      : 35.000000
+MARGIN             : 5.000000
+selfLoopStrength	: 0.000000
+selfLoopRatio	    : 0.000000
+refWeightPath      : NULL
+refLWeightPath     : NULL
+refOuputTrainPath  : NULL
+refOutputTestPath  : NULL
+ADD_BIAS           : 0
+BIAS_FREQ          : 100000
+
+
+
+
+
+******************layer nexts start********************
+layer            data:reservoir 
+layer       reservoir:hidden_1 
+layer        hidden_1:output 
+layer          output:
+
+
+******************layer nexts end********************
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 12, 0, 2, 2, 7, 4, 2, 9, 0, 2;
+hidden_1:
+fire count: 10, 8, 0, 0, 0, 0, 6, 10, 0, 0;
+output:
+fire count: 0, 0, 0, 2, 0, 3, 0, 0, 6, 0;
+time spent on test : time=105.685s
+correct is 279
+
+epoch=0 time=134.846s cost=627.866943 Momentum=0.900000 lrate=0.00500000
+train performance: 48.00%
+===================weight value================
+reservoir:
+weight:-0.816127, 0.399023, 0.957279;
+bias  :0.000000
+hidden_1:
+weight:0.372466, -0.025519, -0.245160;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 56.70%/56.70%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 0, 0, 0, 9, 4, 2, 5, 0, 1;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 1, 0, 0, 14;
+output:
+fire count: 0, 0, 10, 0, 0, 0, 3, 0, 0, 7;
+epoch=1 time=127.372s cost=429.970306 Momentum=0.900000 lrate=0.00500000
+train performance: 69.53%
+===================weight value================
+reservoir:
+weight:-0.809283, 0.417215, 0.974186;
+bias  :0.000000
+hidden_1:
+weight:0.372440, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 67.58%/67.58%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 3, 0, 0, 0, 6, 3, 5, 0, 0, 2;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 4, 0, 0, 0;
+output:
+fire count: 0, 0, 2, 0, 0, 0, 0, 5, 0, 6;
+epoch=2 time=141.669s cost=297.773285 Momentum=0.900000 lrate=0.00353553
+train performance: 83.70%
+===================weight value================
+reservoir:
+weight:-0.769721, 0.454895, 0.995492;
+bias  :0.000000
+hidden_1:
+weight:0.372440, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 80.24%/80.24%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 3, 0, 0, 0, 5, 3, 4, 4, 0, 1;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 6, 0, 0, 11;
+output:
+fire count: 0, 0, 5, 0, 0, 0, 6, 0, 0, 1;
+epoch=3 time=146.590s cost=232.256393 Momentum=0.900000 lrate=0.00288675
+train performance: 89.01%
+===================weight value================
+reservoir:
+weight:-0.738819, 0.491294, 1.029880;
+bias  :0.000000
+hidden_1:
+weight:0.372440, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 84.97%/84.97%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 3, 0, 0, 0, 5, 2, 5, 8, 0, 1;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 7, 0, 0, 15;
+output:
+fire count: 0, 0, 7, 0, 0, 0, 0, 0, 0, 1;
+epoch=4 time=148.840s cost=193.158859 Momentum=0.900000 lrate=0.00250000
+train performance: 91.31%
+===================weight value================
+reservoir:
+weight:-0.755625, 0.473695, 1.010856;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 86.90%/86.90%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 0, 0, 0, 6, 3, 6, 5, 0, 4;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 8, 0, 0, 7;
+output:
+fire count: 0, 0, 6, 0, 0, 0, 0, 0, 0, 0;
+epoch=5 time=149.439s cost=166.943024 Momentum=0.900000 lrate=0.00223607
+train performance: 93.17%
+===================weight value================
+reservoir:
+weight:-0.792847, 0.440343, 0.978446;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 86.96%/86.96%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 0, 0, 0, 4, 6, 7, 5, 0, 4;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 10, 0, 0, 18;
+output:
+fire count: 0, 0, 4, 0, 0, 0, 0, 0, 0, 0;
+epoch=6 time=149.788s cost=146.018341 Momentum=0.900000 lrate=0.00204124
+train performance: 95.03%
+===================weight value================
+reservoir:
+weight:-0.792623, 0.437362, 0.976535;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 88.64%/88.64%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 0, 0, 0, 6, 6, 7, 7, 0, 3;
+hidden_1:
+fire count: 0, 0, 0, 0, 0, 0, 7, 0, 0, 5;
+output:
+fire count: 0, 0, 4, 0, 0, 0, 0, 0, 0, 0;
+epoch=7 time=132.642s cost=130.063248 Momentum=0.900000 lrate=0.00188982
+train performance: 95.82%
+===================weight value================
+reservoir:
+weight:-0.804028, 0.429658, 0.974454;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 89.29%/89.29%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 0, 0, 0, 5, 5, 7, 8, 0, 6;
+hidden_1:
+fire count: 0, 0, 0, 1, 0, 0, 10, 0, 0, 6;
+output:
+fire count: 0, 0, 4, 0, 0, 0, 0, 0, 0, 0;
+epoch=8 time=145.196s cost=121.071465 Momentum=0.900000 lrate=0.00176777
+train performance: 96.52%
+===================weight value================
+reservoir:
+weight:-0.798659, 0.435202, 0.979647;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 89.60%/89.60%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 0, 0, 0, 6, 5, 7, 10, 0, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 3, 0, 0, 0, 0, 0, 0, 0;
+epoch=9 time=149.842s cost=111.451469 Momentum=0.900000 lrate=0.00166667
+train performance: 97.05%
+===================weight value================
+reservoir:
+weight:-0.801640, 0.427195, 0.967139;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.53%/90.53%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 0, 0, 0, 8, 5, 9, 11, 0, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 3;
+output:
+fire count: 0, 0, 4, 0, 0, 0, 0, 0, 0, 0;
+epoch=10 time=150.679s cost=101.027039 Momentum=0.900000 lrate=0.00158114
+train performance: 97.39%
+===================weight value================
+reservoir:
+weight:-0.803837, 0.419542, 0.947568;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.30%/90.53%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 0, 0, 0, 8, 5, 7, 13, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 1;
+output:
+fire count: 0, 0, 3, 0, 0, 0, 0, 0, 0, 0;
+epoch=11 time=150.996s cost=97.213661 Momentum=0.900000 lrate=0.00150756
+train performance: 97.44%
+===================weight value================
+reservoir:
+weight:-0.807437, 0.416437, 0.940514;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 89.53%/90.53%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 9, 0, 0, 0, 9, 6, 8, 13, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 3;
+output:
+fire count: 0, 0, 4, 0, 0, 0, 2, 0, 0, 0;
+epoch=12 time=150.866s cost=88.382179 Momentum=0.900000 lrate=0.00144338
+train performance: 98.12%
+===================weight value================
+reservoir:
+weight:-0.833048, 0.391389, 0.913515;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.36%/90.53%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 6, 8, 11, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 3, 0, 0, 0, 0, 0, 0, 0;
+epoch=13 time=150.499s cost=84.381454 Momentum=0.900000 lrate=0.00138675
+train performance: 97.80%
+===================weight value================
+reservoir:
+weight:-0.827725, 0.398652, 0.921185;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.51%/90.53%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 6, 6, 7, 10, 0, 6;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 9, 0, 0, 4;
+output:
+fire count: 0, 0, 3, 0, 0, 0, 0, 0, 0, 0;
+epoch=14 time=151.299s cost=77.240219 Momentum=0.900000 lrate=0.00133631
+train performance: 98.48%
+===================weight value================
+reservoir:
+weight:-0.829172, 0.385314, 0.908321;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.22%/91.22%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 9, 1, 0, 0, 8, 6, 7, 11, 0, 5;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 9, 0, 0, 1;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=15 time=150.532s cost=72.246262 Momentum=0.900000 lrate=0.00129099
+train performance: 98.62%
+===================weight value================
+reservoir:
+weight:-0.836726, 0.374813, 0.901881;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.22%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 9, 1, 0, 0, 8, 5, 8, 11, 0, 6;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=16 time=151.887s cost=68.841141 Momentum=0.900000 lrate=0.00125000
+train performance: 98.82%
+===================weight value================
+reservoir:
+weight:-0.846024, 0.368198, 0.895171;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.07%/91.22%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 5, 8, 11, 0, 6;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 11, 0, 0, 0;
+output:
+fire count: 0, 0, 3, 0, 0, 0, 0, 0, 0, 0;
+epoch=17 time=152.982s cost=66.522453 Momentum=0.900000 lrate=0.00121268
+train performance: 98.84%
+===================weight value================
+reservoir:
+weight:-0.847431, 0.364719, 0.891250;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.22%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 6, 7, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 2, 0, 0, 0, 0, 0, 0, 0;
+epoch=18 time=153.575s cost=63.104057 Momentum=0.900000 lrate=0.00117851
+train performance: 98.89%
+===================weight value================
+reservoir:
+weight:-0.842496, 0.364822, 0.890076;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.45%/91.45%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 6, 5, 7, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=19 time=153.573s cost=58.428295 Momentum=0.900000 lrate=0.00114708
+train performance: 99.18%
+===================weight value================
+reservoir:
+weight:-0.847449, 0.356236, 0.882002;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.14%/91.45%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 5, 7, 11, 1, 8;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 2, 0, 0, 0, 0, 0, 0, 0;
+epoch=20 time=153.584s cost=55.985516 Momentum=0.900000 lrate=0.00111803
+train performance: 99.11%
+===================weight value================
+reservoir:
+weight:-0.848008, 0.353097, 0.880035;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.10%/91.45%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 5, 8, 11, 1, 8;
+hidden_1:
+fire count: 0, 0, 0, 9, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=21 time=153.907s cost=55.097054 Momentum=0.900000 lrate=0.00109109
+train performance: 99.18%
+===================weight value================
+reservoir:
+weight:-0.837335, 0.359278, 0.884920;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.08%/91.45%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 7, 5, 8, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=22 time=154.180s cost=51.715839 Momentum=0.900000 lrate=0.00106600
+train performance: 99.37%
+===================weight value================
+reservoir:
+weight:-0.841828, 0.355144, 0.884223;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.57%/91.57%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 1, 0, 8, 6, 8, 11, 1, 8;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 1, 0, 0, 0, 0, 0, 0, 0;
+epoch=23 time=153.872s cost=48.648720 Momentum=0.900000 lrate=0.00104257
+train performance: 99.47%
+===================weight value================
+reservoir:
+weight:-0.846458, 0.349747, 0.881059;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.48%/91.57%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 4, 7, 11, 1, 8;
+hidden_1:
+fire count: 0, 0, 0, 9, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 2, 0, 0, 0, 0, 0, 0, 0;
+epoch=24 time=152.924s cost=46.694592 Momentum=0.900000 lrate=0.00102062
+train performance: 99.49%
+===================weight value================
+reservoir:
+weight:-0.848342, 0.350839, 0.885978;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.28%/91.57%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 4, 8, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 9, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=25 time=153.470s cost=44.586674 Momentum=0.900000 lrate=0.00100000
+train performance: 99.61%
+===================weight value================
+reservoir:
+weight:-0.855240, 0.343662, 0.880267;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.85%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 6, 4, 8, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=26 time=154.067s cost=43.263641 Momentum=0.900000 lrate=0.00098058
+train performance: 99.64%
+===================weight value================
+reservoir:
+weight:-0.851290, 0.345927, 0.881701;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 6, 4, 8, 12, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=27 time=154.150s cost=42.190006 Momentum=0.900000 lrate=0.00096225
+train performance: 99.81%
+===================weight value================
+reservoir:
+weight:-0.850560, 0.346020, 0.882867;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.01%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 8, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 10, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=28 time=154.436s cost=40.067116 Momentum=0.900000 lrate=0.00094491
+train performance: 99.57%
+===================weight value================
+reservoir:
+weight:-0.862045, 0.334443, 0.871289;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.95%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 1, 0, 8, 3, 9, 10, 0, 7;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=29 time=154.469s cost=38.217529 Momentum=0.900000 lrate=0.00092848
+train performance: 99.59%
+===================weight value================
+reservoir:
+weight:-0.866670, 0.329527, 0.866225;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.07%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 1, 0, 9, 3, 9, 10, 0, 7;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=30 time=153.962s cost=37.173347 Momentum=0.900000 lrate=0.00091287
+train performance: 99.69%
+===================weight value================
+reservoir:
+weight:-0.871981, 0.325808, 0.862697;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.51%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 1, 0, 8, 4, 9, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 8, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=31 time=154.977s cost=34.563980 Momentum=0.900000 lrate=0.00089803
+train performance: 99.71%
+===================weight value================
+reservoir:
+weight:-0.873262, 0.326895, 0.866056;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.75%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=32 time=154.825s cost=35.052872 Momentum=0.900000 lrate=0.00088388
+train performance: 99.73%
+===================weight value================
+reservoir:
+weight:-0.873846, 0.328561, 0.868200;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.29%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 10, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 7, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=33 time=155.016s cost=31.576532 Momentum=0.900000 lrate=0.00087039
+train performance: 99.78%
+===================weight value================
+reservoir:
+weight:-0.879311, 0.322753, 0.863680;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 9, 10, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 6, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=34 time=153.948s cost=32.891117 Momentum=0.900000 lrate=0.00085749
+train performance: 99.73%
+===================weight value================
+reservoir:
+weight:-0.877281, 0.328456, 0.871399;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.45%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 7, 3, 8, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=35 time=153.496s cost=31.109125 Momentum=0.900000 lrate=0.00084515
+train performance: 99.73%
+===================weight value================
+reservoir:
+weight:-0.877999, 0.330788, 0.874848;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.22%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 7, 3, 9, 11, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=36 time=154.364s cost=29.859247 Momentum=0.900000 lrate=0.00083333
+train performance: 99.86%
+===================weight value================
+reservoir:
+weight:-0.880707, 0.326457, 0.872183;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.34%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 4, 9, 12, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=37 time=155.349s cost=29.061806 Momentum=0.900000 lrate=0.00082199
+train performance: 99.83%
+===================weight value================
+reservoir:
+weight:-0.879444, 0.329959, 0.875190;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.51%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 4, 9, 10, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=38 time=155.317s cost=28.408499 Momentum=0.900000 lrate=0.00081111
+train performance: 99.86%
+===================weight value================
+reservoir:
+weight:-0.886094, 0.327859, 0.875303;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.90%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 4, 8, 9, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=39 time=155.778s cost=27.035973 Momentum=0.900000 lrate=0.00080064
+train performance: 99.81%
+===================weight value================
+reservoir:
+weight:-0.875521, 0.341554, 0.889207;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.72%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 4, 10, 10, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=40 time=154.580s cost=26.375906 Momentum=0.900000 lrate=0.00079057
+train performance: 99.90%
+===================weight value================
+reservoir:
+weight:-0.876965, 0.342782, 0.891908;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.22%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 9, 4, 8, 10, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=41 time=155.308s cost=25.764124 Momentum=0.900000 lrate=0.00078087
+train performance: 99.88%
+===================weight value================
+reservoir:
+weight:-0.875855, 0.342558, 0.885865;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.57%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 9, 1, 0, 0, 9, 4, 9, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=42 time=156.153s cost=25.689522 Momentum=0.900000 lrate=0.00077152
+train performance: 99.86%
+===================weight value================
+reservoir:
+weight:-0.877093, 0.344611, 0.889452;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.96%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 9, 1, 0, 0, 9, 4, 8, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=43 time=155.874s cost=24.261709 Momentum=0.900000 lrate=0.00076249
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.879621, 0.341114, 0.885262;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.62%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 9, 4, 8, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=44 time=156.900s cost=23.816755 Momentum=0.900000 lrate=0.00075378
+train performance: 99.90%
+===================weight value================
+reservoir:
+weight:-0.885959, 0.335559, 0.882603;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.02%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 9, 4, 7, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=45 time=157.342s cost=21.907532 Momentum=0.900000 lrate=0.00074536
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.884590, 0.336325, 0.882445;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.51%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 4, 7, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=46 time=157.173s cost=21.242395 Momentum=0.900000 lrate=0.00073721
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.887073, 0.334037, 0.879751;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.35%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 9, 3, 6, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=47 time=158.622s cost=21.224287 Momentum=0.900000 lrate=0.00072932
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.896445, 0.326596, 0.874733;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.16%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 6, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=48 time=158.830s cost=20.838001 Momentum=0.900000 lrate=0.00072169
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.885621, 0.337158, 0.886140;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.17%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 8, 10, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=49 time=159.010s cost=18.732496 Momentum=0.900000 lrate=0.00071429
+train performance: 99.90%
+===================weight value================
+reservoir:
+weight:-0.895788, 0.330972, 0.880968;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.10%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 3, 7, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=50 time=159.118s cost=19.506760 Momentum=0.900000 lrate=0.00070711
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.903694, 0.325197, 0.875041;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.23%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 3, 8, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=51 time=160.026s cost=19.317238 Momentum=0.900000 lrate=0.00070014
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.906030, 0.322986, 0.876197;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 9, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=52 time=160.715s cost=19.242636 Momentum=0.900000 lrate=0.00069338
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.905065, 0.324181, 0.875388;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 9, 1, 3;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=53 time=162.036s cost=17.960888 Momentum=0.900000 lrate=0.00068680
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.906816, 0.323627, 0.876212;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.69%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 4, 9, 9, 2, 4;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=54 time=161.408s cost=18.149927 Momentum=0.900000 lrate=0.00068041
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.905082, 0.325075, 0.876159;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 10, 8, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=55 time=161.716s cost=18.009657 Momentum=0.900000 lrate=0.00067420
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.908048, 0.321343, 0.872682;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.92%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 4, 10, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=56 time=161.896s cost=17.154997 Momentum=0.900000 lrate=0.00066815
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.908864, 0.320047, 0.869715;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.04%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 3, 9, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 5, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=57 time=161.702s cost=15.749396 Momentum=0.900000 lrate=0.00066227
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.906769, 0.323388, 0.873985;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 6, 3, 10, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=58 time=161.246s cost=17.294062 Momentum=0.900000 lrate=0.00065653
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.906533, 0.322802, 0.873657;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.19%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 4, 10, 7, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=59 time=162.098s cost=15.909223 Momentum=0.900000 lrate=0.00065094
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.914385, 0.312528, 0.862692;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.53%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 4, 9, 7, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=60 time=161.998s cost=16.256639 Momentum=0.900000 lrate=0.00064550
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.918326, 0.309348, 0.860631;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.20%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 7, 3, 8, 8, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=61 time=160.067s cost=14.561806 Momentum=0.900000 lrate=0.00064018
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.914180, 0.311197, 0.860450;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.87%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 1, 7, 3, 9, 8, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=62 time=159.601s cost=15.325447 Momentum=0.900000 lrate=0.00063500
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.917530, 0.306553, 0.857694;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 3, 8, 8, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=63 time=159.357s cost=14.160550 Momentum=0.900000 lrate=0.00062994
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.917142, 0.303643, 0.855742;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.01%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 1, 8, 3, 9, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=64 time=158.515s cost=15.063013 Momentum=0.900000 lrate=0.00062500
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.922123, 0.297988, 0.847149;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 10, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=65 time=157.692s cost=14.472718 Momentum=0.900000 lrate=0.00062017
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.926274, 0.294512, 0.844122;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 7, 3, 11, 9, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=66 time=156.867s cost=14.619749 Momentum=0.900000 lrate=0.00061546
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.925654, 0.295029, 0.844372;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 8, 2, 11, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=67 time=157.739s cost=13.423708 Momentum=0.900000 lrate=0.00061085
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.931331, 0.289946, 0.840473;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.96%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 3, 10, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=68 time=158.423s cost=13.407533 Momentum=0.900000 lrate=0.00060634
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.931895, 0.290937, 0.841506;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.02%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 10, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=69 time=159.250s cost=13.352728 Momentum=0.900000 lrate=0.00060193
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.940340, 0.281613, 0.832419;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.92%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 1, 7, 3, 10, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=70 time=158.931s cost=13.140270 Momentum=0.900000 lrate=0.00059761
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.942284, 0.280054, 0.830996;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.64%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 7, 3, 9, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=71 time=157.864s cost=12.726219 Momentum=0.900000 lrate=0.00059339
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.946052, 0.276243, 0.827449;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.37%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 3, 9, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=72 time=158.923s cost=13.071705 Momentum=0.900000 lrate=0.00058926
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.949891, 0.272460, 0.823143;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.37%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 8, 4, 8, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=73 time=158.380s cost=12.939402 Momentum=0.900000 lrate=0.00058521
+train performance: 99.93%
+===================weight value================
+reservoir:
+weight:-0.951912, 0.264155, 0.815467;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.26%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 4, 8, 9, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=74 time=158.826s cost=12.583534 Momentum=0.900000 lrate=0.00058124
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.951133, 0.266031, 0.817649;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.14%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 7, 4, 9, 11, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 9, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=75 time=158.538s cost=11.725737 Momentum=0.900000 lrate=0.00057735
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.957015, 0.260252, 0.812185;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.33%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 8, 4, 8, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=76 time=159.814s cost=11.251570 Momentum=0.900000 lrate=0.00057354
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.958908, 0.258418, 0.810391;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 9, 4, 9, 11, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=77 time=160.909s cost=10.719217 Momentum=0.900000 lrate=0.00056980
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.958964, 0.254598, 0.805121;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 3, 10, 11, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=78 time=159.689s cost=11.446403 Momentum=0.900000 lrate=0.00056614
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.957506, 0.255648, 0.806101;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 8, 3, 10, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=79 time=159.177s cost=11.070739 Momentum=0.900000 lrate=0.00056254
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.954871, 0.260476, 0.811644;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.19%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 9, 11, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=80 time=158.267s cost=10.591260 Momentum=0.900000 lrate=0.00055902
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.961623, 0.256319, 0.808318;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.72%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 9, 10, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=81 time=157.368s cost=10.486238 Momentum=0.900000 lrate=0.00055556
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.965093, 0.252723, 0.806406;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.80%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 4, 11, 9, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=82 time=156.969s cost=10.636408 Momentum=0.900000 lrate=0.00055216
+train performance: 99.95%
+===================weight value================
+reservoir:
+weight:-0.962335, 0.254202, 0.809258;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.31%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 4, 11, 9, 2, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=83 time=156.615s cost=9.776196 Momentum=0.900000 lrate=0.00054882
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.963345, 0.253515, 0.808477;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.81%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 4, 9, 9, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=84 time=156.090s cost=10.045147 Momentum=0.900000 lrate=0.00054554
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963572, 0.254497, 0.808400;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 4, 11, 10, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=85 time=155.900s cost=9.735394 Momentum=0.900000 lrate=0.00054233
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.963592, 0.255405, 0.808666;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.17%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 4, 11, 10, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=86 time=155.443s cost=9.270160 Momentum=0.900000 lrate=0.00053916
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.964259, 0.254896, 0.807965;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.83%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 9, 4, 11, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=87 time=154.741s cost=9.579672 Momentum=0.900000 lrate=0.00053606
+train performance: 99.98%
+===================weight value================
+reservoir:
+weight:-0.965443, 0.254653, 0.807729;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.81%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 9, 4, 12, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=88 time=154.395s cost=9.636890 Momentum=0.900000 lrate=0.00053300
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.969483, 0.249413, 0.800580;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.57%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 9, 4, 13, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=89 time=153.868s cost=9.219942 Momentum=0.900000 lrate=0.00053000
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.969915, 0.246727, 0.796690;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.63%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 9, 3, 11, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=90 time=155.269s cost=8.677934 Momentum=0.900000 lrate=0.00052705
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.970454, 0.245575, 0.794141;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.04%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 4, 1, 0, 0, 8, 3, 12, 11, 1, 7;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=91 time=155.820s cost=8.742878 Momentum=0.900000 lrate=0.00052414
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968501, 0.247188, 0.795807;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.28%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 3, 10, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=92 time=157.231s cost=8.974167 Momentum=0.900000 lrate=0.00052129
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.973873, 0.243939, 0.792776;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.63%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 3, 10, 11, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=93 time=157.661s cost=8.551183 Momentum=0.900000 lrate=0.00051848
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.976333, 0.242083, 0.797604;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.90%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 2, 0, 0, 7, 3, 11, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=94 time=157.968s cost=8.237325 Momentum=0.900000 lrate=0.00051571
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.978843, 0.238774, 0.794581;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 1, 0, 0, 8, 3, 10, 10, 2, 4;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=95 time=157.104s cost=8.005070 Momentum=0.900000 lrate=0.00051299
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.970930, 0.247457, 0.802997;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.78%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 5, 2, 0, 0, 8, 3, 9, 10, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=96 time=156.314s cost=8.098744 Momentum=0.900000 lrate=0.00051031
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.967166, 0.250310, 0.805727;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 2, 10, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=97 time=156.203s cost=7.968614 Momentum=0.900000 lrate=0.00050767
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.967274, 0.250041, 0.805474;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.71%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 0, 8, 2, 10, 9, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=98 time=156.195s cost=7.686142 Momentum=0.900000 lrate=0.00050508
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.965846, 0.251205, 0.805849;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 2, 9, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=99 time=155.642s cost=7.902462 Momentum=0.900000 lrate=0.00050252
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963242, 0.255998, 0.811428;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.86%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 1, 7, 2, 9, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=100 time=155.945s cost=8.027764 Momentum=0.900000 lrate=0.00050000
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.965002, 0.254171, 0.809651;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.48%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 1, 8, 2, 10, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=101 time=155.329s cost=7.591985 Momentum=0.900000 lrate=0.00049752
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968803, 0.251259, 0.804740;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 0, 8, 2, 9, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=102 time=155.560s cost=7.213423 Momentum=0.900000 lrate=0.00049507
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.974227, 0.244593, 0.797861;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.81%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 1, 7, 2, 10, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=103 time=155.709s cost=7.279334 Momentum=0.900000 lrate=0.00049266
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.977038, 0.242413, 0.795211;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.92%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 0, 7, 2, 10, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=104 time=155.902s cost=6.942540 Momentum=0.900000 lrate=0.00049029
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.973898, 0.244340, 0.796527;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.65%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 2, 0, 0, 8, 2, 10, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 1, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=105 time=155.943s cost=6.900290 Momentum=0.900000 lrate=0.00048795
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.975912, 0.242043, 0.793463;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.80%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 2, 10, 11, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 1, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=106 time=155.929s cost=6.871318 Momentum=0.900000 lrate=0.00048564
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.971592, 0.245382, 0.796628;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.56%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 7, 2, 9, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=107 time=154.749s cost=6.764365 Momentum=0.900000 lrate=0.00048337
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.971674, 0.245340, 0.796582;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.10%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 2, 8, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=108 time=154.585s cost=6.080637 Momentum=0.900000 lrate=0.00048113
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.972035, 0.244805, 0.795894;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.95%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 8, 2, 8, 12, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=109 time=155.152s cost=6.218493 Momentum=0.900000 lrate=0.00047891
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.973737, 0.242860, 0.793009;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.68%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 8, 2, 8, 12, 1, 6;
+hidden_1:
+fire count: 0, 0, 0, 1, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=110 time=155.142s cost=6.515210 Momentum=0.900000 lrate=0.00047673
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963744, 0.252962, 0.802803;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.72%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 1, 8, 2, 8, 11, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=111 time=155.240s cost=6.236118 Momentum=0.900000 lrate=0.00047458
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968850, 0.249705, 0.799059;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 2, 8, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=112 time=155.245s cost=6.665620 Momentum=0.900000 lrate=0.00047246
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.964380, 0.252756, 0.801832;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.01%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 9, 2, 8, 11, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=113 time=155.501s cost=5.934573 Momentum=0.900000 lrate=0.00047036
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.965631, 0.251588, 0.800383;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 9, 2, 8, 12, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=114 time=155.658s cost=6.134717 Momentum=0.900000 lrate=0.00046829
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.966142, 0.251591, 0.800050;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.75%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 9, 2, 8, 11, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=115 time=155.408s cost=6.000966 Momentum=0.900000 lrate=0.00046625
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968435, 0.248577, 0.796847;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.95%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 9, 3, 8, 11, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=116 time=155.898s cost=5.769677 Momentum=0.900000 lrate=0.00046424
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.970712, 0.246260, 0.794083;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.10%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 9, 2, 9, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=117 time=155.587s cost=6.032835 Momentum=0.900000 lrate=0.00046225
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.966549, 0.248495, 0.796342;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.13%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 8, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=118 time=155.539s cost=5.775712 Momentum=0.900000 lrate=0.00046029
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963509, 0.249173, 0.794119;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.74%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 9, 3, 10, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 8, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=119 time=155.609s cost=5.678658 Momentum=0.900000 lrate=0.00045835
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.959340, 0.252083, 0.797151;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.71%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 10, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=120 time=154.485s cost=5.853211 Momentum=0.900000 lrate=0.00045644
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.955578, 0.255609, 0.795805;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.78%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=121 time=155.679s cost=5.746017 Momentum=0.900000 lrate=0.00045455
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.954712, 0.256991, 0.795613;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.60%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=122 time=156.477s cost=5.129165 Momentum=0.900000 lrate=0.00045268
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.952393, 0.258620, 0.797265;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.95%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 12, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=123 time=157.233s cost=5.656929 Momentum=0.900000 lrate=0.00045083
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.952747, 0.259464, 0.797822;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.48%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 11, 10, 2, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=124 time=156.987s cost=4.910913 Momentum=0.900000 lrate=0.00044901
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.954517, 0.257272, 0.794882;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.57%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 11, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=125 time=157.295s cost=5.147030 Momentum=0.900000 lrate=0.00044721
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.951467, 0.261239, 0.797978;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.02%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 10, 2, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=126 time=157.284s cost=5.263641 Momentum=0.900000 lrate=0.00044544
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.955227, 0.258348, 0.794455;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.71%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 10, 1, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=127 time=157.270s cost=5.230806 Momentum=0.900000 lrate=0.00044368
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.955157, 0.257264, 0.792795;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.90%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 9, 3, 11, 10, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 5, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=128 time=157.397s cost=5.440850 Momentum=0.900000 lrate=0.00044194
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.957937, 0.252759, 0.787416;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.80%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=129 time=156.549s cost=5.390874 Momentum=0.900000 lrate=0.00044023
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.960638, 0.249877, 0.785592;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.59%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 2, 11, 10, 1, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=130 time=157.356s cost=5.384356 Momentum=0.900000 lrate=0.00043853
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963267, 0.246895, 0.781570;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.71%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 2, 11, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 4, 0, 0, 5, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=131 time=157.753s cost=5.607436 Momentum=0.900000 lrate=0.00043685
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.965827, 0.244547, 0.779678;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.65%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 11, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 5, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=132 time=157.721s cost=5.140270 Momentum=0.900000 lrate=0.00043519
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.958495, 0.251822, 0.786833;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.92%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=133 time=157.585s cost=4.975374 Momentum=0.900000 lrate=0.00043355
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.957590, 0.254068, 0.789470;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.53%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=134 time=158.028s cost=4.567842 Momentum=0.900000 lrate=0.00043193
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.960911, 0.249247, 0.783388;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.43%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 11, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=135 time=157.532s cost=5.070014 Momentum=0.900000 lrate=0.00043033
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968305, 0.245342, 0.780174;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.20%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 6, 1, 0, 0, 8, 3, 9, 11, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=136 time=157.716s cost=4.328826 Momentum=0.900000 lrate=0.00042875
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.959155, 0.250449, 0.785940;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.81%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 10, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=137 time=156.525s cost=4.690970 Momentum=0.900000 lrate=0.00042718
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.958064, 0.251096, 0.787167;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.98%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=138 time=156.963s cost=4.426847 Momentum=0.900000 lrate=0.00042563
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.957491, 0.250840, 0.788122;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.92%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 9, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=139 time=157.753s cost=4.277402 Momentum=0.900000 lrate=0.00042409
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.959268, 0.250543, 0.788761;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.86%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 10, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=140 time=158.212s cost=4.780058 Momentum=0.900000 lrate=0.00042258
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.959948, 0.252243, 0.791883;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.08%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 9, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=141 time=158.175s cost=4.885321 Momentum=0.900000 lrate=0.00042108
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.956219, 0.256119, 0.795841;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.59%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 9, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=142 time=156.934s cost=4.576050 Momentum=0.900000 lrate=0.00041959
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.957372, 0.253090, 0.792055;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.04%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 1, 7, 3, 9, 9, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=143 time=156.754s cost=4.716562 Momentum=0.900000 lrate=0.00041812
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.955662, 0.258165, 0.798170;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.43%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 9, 2, 4;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=144 time=155.873s cost=4.320618 Momentum=0.900000 lrate=0.00041667
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.961607, 0.254102, 0.795089;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.22%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 9, 9, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=145 time=155.582s cost=4.329309 Momentum=0.900000 lrate=0.00041523
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.963540, 0.248535, 0.789159;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.78%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 8, 1, 0, 0, 8, 3, 10, 9, 2, 6;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 5, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=146 time=149.381s cost=4.796475 Momentum=0.900000 lrate=0.00041380
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.967303, 0.244792, 0.786119;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.95%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 8, 3, 9, 10, 2, 7;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 7, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=147 time=156.594s cost=4.455577 Momentum=0.900000 lrate=0.00041239
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.968058, 0.244258, 0.786674;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.72%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 3, 10, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 2, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=148 time=157.442s cost=4.677692 Momentum=0.900000 lrate=0.00041100
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.969035, 0.243624, 0.785172;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 90.90%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 0, 7, 4, 11, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+epoch=149 time=59.814s cost=4.176726 Momentum=0.900000 lrate=0.00040962
+train performance: 100.00%
+===================weight value================
+reservoir:
+weight:-0.965133, 0.246872, 0.788639;
+bias  :0.000000
+hidden_1:
+weight:0.293753, -0.025519, -0.245169;
+bias  :0.000000
+output:
+weight:-0.516456, -0.426211, 0.948846;
+bias  :0.000000
+===================test Result================
+test 91.05%/91.85%
+===================output fire counts================
+The last sample label: 16
+reservoir:
+fire count: 7, 1, 0, 1, 7, 4, 9, 10, 2, 5;
+hidden_1:
+fire count: 0, 0, 0, 3, 0, 0, 6, 0, 0, 0;
+output:
+fire count: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+training time hours = 11.280064
