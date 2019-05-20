@@ -1,101 +1,113 @@
->CUDA-CNN
->========
+#  Spike-Train level RSNNs Backpropagation (ST-RSBP) for SNNs
+This repo is the CUDA implementation of SNNs trained the Spike-Train levelRSNNs Backpropagation, modified based on <a href="https://github.com/jinyyy666/mm-bp-snn">HM2-BP</a> for spiking neuron networks.
 
+The paper.
 
->Document   
->1.  The simple base c version author is <a href="http://eric-yuan.me/cnn/"> Eric </a>  and I modified it based <a href="https://github.com/zhxfl/CUDA-CNN">zhxfl</a> for spiking neuron networks.
->2.  <a href="http://zhxfl.github.io/cuda-cnn_cuda-stream"> Overlap Data Transfers in CUDA </a>   
->3.  The sub-version use cudnn is <a href="https://github.com/TanDongXu/CUDA-MCDNN">tdx</a>  
->
->Results
->--------
->CNN accelerated by cuda.   
->The <a href="http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html"> start-of-art result's</a> of popular datasets    
->1. Test on <a href="http://yann.lecun.com/exdb/mnist/"> mnist</a> and get 99.76%, after voting(99.82%) (best 99.79%)   
->2. Test on cifar-10  and get 87%   (best 89%)   
-***
+Contact <stonezwr@gmail.com> if you have any questions or concerns.
 
->Feature
->--------
->1. Use ***<a href="http://cs.nyu.edu/~wanli/dropc/">Dropout</a>*** to train the NetWork
->2. Support checkpoint, the program will save the best test result and save the network weight in the file "Result/checkPoint.txt", If the program exit accidentally, you can continue the program form this checkpoint.
->3. Translate the data set of mnist, including scale, rotate, ***distortion***,
- accordding to <a href="http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=D1C7D701BD39935473808DA5A93426C5?doi=10.1.1.160.8494&rep=rep1&type=pdf">Best Practices for Convolutional Neural Networks Applied to Visual Document Analysis</a>.
->4. The log will be saved in the file "Result/log.txt".  
->5. In the convolutional layers, you can chose ***combine feature maps***, according to <a href="http://cogprints.org/5869/1/cnn_tutorial.pdf">notes on Convolutional Neural NetWorks</a>.      
->6. Support <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks">local connection layers</a>.   
->7. If you want the program run fast, you can set the "TEST_EPOCH" to be large.     
->8. Support ***branchLayer*** and ***combineLayer***, which is designed accordding to ***<a href="http://arxiv.org/abs/1409.4842">goolenet</a>***, the network structure is no logger an linear structure but Directed acycline graph.
-***
+# Dependencies and Libraries
+* OpenCV
+* CUDA (suggest CUDA 8.0)
+* OpenMP
 
->Compile
->-------
->Depend on opencv and cuda    
->You can compile the code on windows or linux.   
-###SDK include path(-I)   
->* linux: /usr/local/cuda/samples/common/inc/ (For include file "helper_cuda"); /usr/local/include/opencv/ (Depend on situation)        
->* windows: X:/Program Files (x86) /NVIDIA Corporation/CUDA Samples/v6.5/common/inc (For include file "helper_cuda"); X:/Program Files/opencv/vs2010/install/include (Depend on situation)
->
-###Library search path(-L)   
+You can compile the code on windows or linux.   
+##### SDK include path(-I)   
+* linux: /usr/local/cuda/samples/common/inc/ (For include file "helper_cuda"); /usr/local/include/opencv/ (Depend on situation)        
+* windows: X:/Program Files (x86) /NVIDIA Corporation/CUDA Samples/v6.5/common/inc (For include file "helper_cuda"); X:/Program Files/opencv/vs2010/install/include (Depend on situation)
+
+##### Library search path(-L)   
 >* linux: /usr/local/lib/   
 >* windows: X:/Program Files/opencv/vs2010/install/x86/cv10/lib (Depend on situation)    
 >
-###libraries(-l)      
+##### libraries(-l)      
 >* opencv_core   
 >* opencv_highgui   
 >* opencv_imgproc   
->* opencv_imgcodecs (need for opencv3.0)   
+>* opencv_imgcodecs (need for opencv3.0)  
+>* openmp
 >* ***cublas***   
 >* ***curand***   
->* ***cudadevrt***   
->
+>* ***cudadevrt***  
+>* ***cudacusparse***  
+>* ***cudacurand*** 
+>* ***cudacusolver*** 
 
-###GPU compute 
->* capability 2.0   
+# Installation
 
-###CMake for Linux
->0. sudo apt-get install cmake libopencv-dev 
->1. mkdir build  
->2. cd build  
->3. cmake ..  
->4. make -j16  
->5. cd ../mnist/  
->6. sh get_mnist.sh  
->7. cd ../cifar-10  
->8. sh get_cifar10.sh  
->9. cd ../  
->10. ./build/CUDA-CNN 1 1   
+The repo requires [CUDA](https://developer.nvidia.com/cuda-toolkit-archive) 8.0+ to run.
 
-###Windows
->1. Install vs2010.
->2. Download and install <a href="http://sourceforge.net/projects/opencvlibrary/files/opencv-win/3.0.0-beta/"> opencv-2.4</a> or other higher versions
->3. Download and install <a href="https://developer.nvidia.com/cuda-downloads"> cuda-5.0</a> or other higher versions
->4. When you create a new project using VS2010, You can find NVIDIA-CUDA project template, create a cuda-project.
->5. View-> Property Pages-> Configuration Properties-> CUDA C/C++ -> Device-> Code Generation-> compute_20,sm_20   
->6. View-> Property Pages-> Configuration Properties-> CUDA C/C++ -> Common-> Generate Relocatable Device Code-> Yes(-rdc=true) 
->7. View-> Property Pages-> Configuration Properties-> Linker-> Input-> Additional Dependencies-> libraries(-l)   
->8. View-> Property Pages-> Configuration Properties-> VC++ Directories-> General-> Library search path(-L)  
->9. View-> Property Pages-> Configuration Properties-> VC++ Directories-> General-> Include Directories(-I)  
+Please install the opencv and cuda before hand.
 
-###Linux
->1. Install opencv and cuda
->2. Start the ***nsight*** from cuda
->3. Create an 'empty cuda' project and import the clone code  
->4. Project->Proerties for add-> Build-> Settings->CUDA->Device linker mode: separate compilation   
->5. Project->Proerties for add-> Build-> Settings->CUDA->Generate PTX code 2.0
->6. Project->Proerties for add-> Build-> Settings->CUDA->Generate GPU code 2.0
->7. Project->Proerties for add-> Build-> Settings->Tool Settings->NVCC Compiler->includes: +/usr/local/cuda/samples/common/inc/; + opencv sdk include path ;   
->8. Project->Proerties for add-> Build-> Settings->Tool Settings->NVCC Linkers->Libraries: libraries(-l)   
->9. Project->Proerties for add-> Build-> Settings->Tool Settings->NVCC Linkers->Libraries search path(-L): /usr/local/lib/    
+Install CMake and OpenCV
+```sh
+$ sudo apt-get install cmake libopencv-dev 
+```
 
-***
->Config   
->1. <a href="https://github.com/zhxfl/CUDA-CNN/blob/master/Config/Cifar10Config.txt">CIFAR10</a>   
->2. <a href="https://github.com/zhxfl/CUDA-CNN/blob/master/Config/MnistConfig.txt">MNIST</a>   
-***
+Checkout and compile the code:
+```sh
+$ git clone https://github.com/jinyyy666/mm-bp-snn.git
+$ cd mm-bp-snn
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j
+```
+##### GPU compute compatibility
+* capability 6.0 for Titan XP, which is used for the authors. 
+* Check the compatibility and change the CMAKE file before compile.
 
->Informations
->------------
->* Author : Yingyezhe Jin
->* Welcome for any suggest!!   
 
+## Get Dataset
+MNIST:
+```sh
+$ cd mnist/
+$ ./get_mnist.sh
+```
+N-MNIST: Get the N-MNIST dataset by [N-MNIST](http://www.garrickorchard.com/datasets/n-mnist). Then unzip the ''Test.zip'' and ''Train.zip''. Run the matlab code: [NMNIST_Converter.m](https://github.com/stonezwr/ST-RSBP/tree/master/other_tools/nmnist)
+
+N-Tidigits: [N-Tidigits](https://docs.google.com/document/d/1Uxe7GsKKXcy6SlDUX4hoJVAC0-UkH-8kr5UXp0Ndi1M/edit), read the dataset using [N-Tidigits_Converter.py](https://github.com/stonezwr/ST-RSBP/tree/master/other_tools/NTidigits_Converter).
+
+Fashion-MNIST: [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist)
+
+TI46: Download from [TI46](https://catalog.ldc.upenn.edu/LDC93S9) and preprocess it using Lyon ear model using [TI46_Lyon_ear.m](https://github.com/stonezwr/ST-RSBP/tree/master/other_tools/Lyon_ear_model)
+
+## Run the code 
+* MNIST 
+```sh
+$ ./build/CUDA-SNN 1 1
+```
+* N-MNIST 
+```sh
+$ ./build/CUDA-SNN 2 1
+```
+* Fashion Mnist
+```sh
+$ ./build/CUDA-SNN 3 1
+```
+* TI46_Alpha
+```sh
+$ ./build/CUDA-SNN 4 1
+```
+* TI46_Digits
+```sh
+$ ./build/CUDA-SNN 5 1
+```
+* N-Tidigits
+```sh
+$ ./build/CUDA-SNN 6 1
+```
+
+##### For Window user
+Do the following to set up compilation environment.
+* Install [Visual Stidio](https://www.visualstudio.com/downloads/) and [OpenCV](https://opencv.org/releases.html).
+* When you create a new project using VS, You can find NVIDIA-CUDA project template, create a cuda-project.
+* View-> Property Pages-> Configuration Properties-> CUDA C/C++ -> Device-> Code Generation-> compute_60,sm_60   
+* View-> Property Pages-> Configuration Properties-> CUDA C/C++ -> Common-> Generate Relocatable Device Code-> Yes(-rdc=true) 
+* View-> Property Pages-> Configuration Properties-> Linker-> Input-> Additional Dependencies-> libraries(-l)   
+* View-> Property Pages-> Configuration Properties-> VC++ Directories-> General-> Library search path(-L)  
+* View-> Property Pages-> Configuration Properties-> VC++ Directories-> General-> Include Directories(-I)  
+
+# Notes
+* The SNNs are implemented in terms of layers. User can config the SNNs by using configuration files in Config/
+* The program will save the best test result and save the network weight in the file "Result/checkPoint.txt", If the program exit accidentally, you can continue the program form this checkpoint.
+* The logs for the reported performance and the settings can be found in [Result](https://github.com/stonezwr/ST-RSBP/tree/master/Result) folder.
