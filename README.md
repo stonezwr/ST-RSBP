@@ -74,27 +74,27 @@ TI46: Download from [TI46](https://catalog.ldc.upenn.edu/LDC93S9) and preprocess
 ## Run the code 
 * MNIST 
 ```sh
-$ ./build/CUDA-SNN 1 1
+$ ./build/CUDA-RSNN 1 1
 ```
 * N-MNIST 
 ```sh
-$ ./build/CUDA-SNN 2 1
+$ ./build/CUDA-RSNN 2 1
 ```
 * Fashion Mnist
 ```sh
-$ ./build/CUDA-SNN 3 1
+$ ./build/CUDA-RSNN 3 1
 ```
 * TI46_Alpha
 ```sh
-$ ./build/CUDA-SNN 4 1
+$ ./build/CUDA-RSNN 4 1
 ```
 * TI46_Digits
 ```sh
-$ ./build/CUDA-SNN 5 1
+$ ./build/CUDA-RSNN 5 1
 ```
 * N-Tidigits
 ```sh
-$ ./build/CUDA-SNN 6 1
+$ ./build/CUDA-RSNN 6 1
 ```
 
 ##### For Window user

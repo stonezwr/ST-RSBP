@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 3.0)
-project (CUDA-CNN)
+project (CUDA-RSNN)
 
 # The version number.
-set (CUDA-CNN_VERSION_MAJOR 2)
-set (CUDA-CNN_VERSION_MINOR 0)
+set (CUDA-RSNN_VERSION_MAJOR 2)
+set (CUDA-RSNN_VERSION_MINOR 0)
 
 #    CMake Scripts dir
 #set(CMAKE_SCRIPT_DIR ${CMAKE_SOURCE_DIR}/CMakeScripts)
@@ -72,9 +72,9 @@ file(GLOB CUDA_CNN_CU_SOURCES  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 
     #  EXCLUDE_FROM_ALL "build/*")
 
-cuda_add_executable(CUDA-CNN ${CUDA_CNN_CU_SOURCES})
-#cuda_add_library(CUDA-CNN STATIC ${CUDA_CNN_CPP_SOURCES})
-target_link_libraries(CUDA-CNN
+cuda_add_executable(CUDA-RSNN ${CUDA_CNN_CU_SOURCES})
+#cuda_add_library(CUDA-RSNN STATIC ${CUDA_CNN_CPP_SOURCES})
+target_link_libraries(CUDA-RSNN
   ${OpenCV_LIBRARIES}
   ${OpenMP_CXX_LIBRARIES}
   ${CUDA_CUBLAS_LIBRARIES}
@@ -83,6 +83,6 @@ target_link_libraries(CUDA-CNN
   ${CUDA_LIBRARIES}
   ${CUDA_cusolver_LIBRARY}
   )
-CUDA_ADD_CUBLAS_TO_TARGET(CUDA-CNN)
+CUDA_ADD_CUBLAS_TO_TARGET(CUDA-RSNN)
 
 #add_subdirectory(net)
