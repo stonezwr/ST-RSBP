@@ -1111,82 +1111,12 @@ void Spiking::initLaterial()
     ConfigSpiking* config = (ConfigSpiking*)Config::instance()->getLayerByName(m_name);
     if(config->m_laterialType == "RESERVOIR"){
         initFromDumpfile(config->m_lweightPath, w_laterial);
-        //initReservoirConnection(config->m_reservoirDim);
     }
     else if(config->m_laterialType == "LOCAL_INHIBITION"){
         initLocalInhibition(config->m_localInbStrength); 
     }
 }
 
-// intialize the reservoir connections
-// TODO: improve the randomness of the reservoir (the bad random seed we used now!)
-void Spiking::initReservoirConnection(const std::vector<int>& reservoirDim)
-{
-    assert(reservoirDim.size() == 3);
-    assert(w_laterial != NULL);
-    int d1 = reservoirDim[0], d2 = reservoirDim[1], d3 = reservoirDim[2];
-    int num = d1 * d2 * d3;
-    if(num != outputSize){
-        printf("The reservoir dim: %d x %d x %d = %d does not match the number neuron: %d!\n",d1, d2, d3, num, outputSize);
-        exit(EXIT_FAILURE);
-    }
-    // adopted from the CPU code:
-    srand(5);
-    std::vector<bool> excitatory(num, false);
-    std::vector<dim3> coordinates;
-    for(int i = 0; i < excitatory.size(); ++i){
-        if(rand() % 100 < 20) excitatory[i] = false;
-        else    excitatory[i] = true;
-    }
-    for(int i = 0; i < d1; ++i){
-        for(int j = 0; j < d2; ++j){
-            for(int k = 0; k < d3; ++k){
-                int index = (i * d2 + j) * d3 + k;
-                assert(index < excitatory.size());
-                coordinates.push_back(dim3(i, j, k));
-            }
-        }
-    }
-    double c, a;
-    double distsq, dist;
-    const double factor2 = 1.5;
-    for(int i = 0; i < num; ++i){
-        for(int j = 0; j < num; ++j){
-            if(excitatory[i]){
-                if(excitatory[j]){
-                    c = 0.3 * factor2;
-                    a = 1;
-                }
-                else{
-                    c = 0.2 * factor2;
-                    a = 1;
-                }
-            }
-            else{
-                if(excitatory[j]){
-                    c = 0.4 * factor2;
-                    a = -1;
-                }
-                else{
-                    c = 0.1 * factor2;
-                    a = -1;
-                }
-            }
-            distsq = 0;
-            dist = coordinates[i].x -  coordinates[j].x;
-            distsq += dist * dist;
-            dist = coordinates[i].y -  coordinates[j].y;
-            distsq += dist * dist;
-            dist = coordinates[i].z -  coordinates[j].z;
-            distsq += dist * dist;
-            if(rand() % 100000 < 100000 * c * exp(-distsq / 4)){
-                //printf("reservoir_%d to reservoir_%d %f\n", i , j, a);
-                w_laterial->set(j, i, 0, a);
-            }
-        }
-    }
-    w_laterial->toGpu();
-}
 
 void Spiking::initLocalInhibition(float strength)
 {

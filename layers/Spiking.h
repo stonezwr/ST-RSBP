@@ -100,7 +100,6 @@ public:
     void loadRef();
 
 	void initRandom();
-    void initReservoirConnection(const std::vector<int>& reservoirDim);
     void initLaterial();
     void initLocalInhibition(float strength);
 	void initFromCheckpoint(FILE* file);

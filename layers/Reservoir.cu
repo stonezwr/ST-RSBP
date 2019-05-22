@@ -922,6 +922,8 @@ void Reservoir::initReservoirConnection(const std::vector<int>& reservoirDim)
 {
     assert(reservoirDim.size() == 3);
     assert(w_laterial != NULL);
+    ConfigReservoir * config = (ConfigReservoir*)Config::instance()->getLayerByName(m_name);
+    float initW = config->m_initW;
 	reservoirSize = 0;
     int d1 = reservoirDim[0], d2 = reservoirDim[1], d3 = reservoirDim[2];
     int num = d1 * d2 * d3;
@@ -946,7 +948,7 @@ void Reservoir::initReservoirConnection(const std::vector<int>& reservoirDim)
             }
         }
     }
-    float c, a;
+    float c;
     float distsq, dist;
     const float factor2 = 1.5;
     for(int j = 0; j < num; ++j){
@@ -955,21 +957,17 @@ void Reservoir::initReservoirConnection(const std::vector<int>& reservoirDim)
             if(excitatory[i]){
                 if(excitatory[j]){
                     c = 0.3 * factor2;
-                    a = 1;
                 }
                 else{
                     c = 0.2 * factor2;
-                    a = 1;
                 }
             }
             else{
                 if(excitatory[j]){
                     c = 0.4 * factor2;
-                    a = -1;
                 }
                 else{
                     c = 0.1 * factor2;
-                    a = -1;
                 }
             }
             distsq = 0;
@@ -980,11 +978,10 @@ void Reservoir::initReservoirConnection(const std::vector<int>& reservoirDim)
             dist = coordinates[i].z -  coordinates[j].z;
             distsq += dist * dist;
             if(rand() % 100000 < 100000 * c * exp(-distsq / 4)){
-                //printf("reservoir_%d to reservoir_%d %f\n", i , j, a);
-                w_laterial->getHost()[i + j * outputSize] = a; // i is input, j is output
+                w_laterial->getHost()[i + j * outputSize] = initW * (2.0f * rand() / RAND_MAX - 1.0f);
 				reservoir_connection->getHost()[record+j*outputSize] = i;
-				record++;
 				reservoirSize++;
+				record++;
             }
 			else{
                 w_laterial->getHost()[i + j * outputSize] = 0; // i is input, j is output
