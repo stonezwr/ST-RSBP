@@ -94,7 +94,7 @@ public:
 	virtual void backpropagation();
     void verify(const std::string& phrase);
 	void getGrad();
-	void updateWeight();
+	void updateWeight(int epoch);
 	void clearMomentum();
 	virtual void calCost();
     void loadRef();
@@ -217,6 +217,7 @@ protected:
     float MARGIN;
     float SELF_LOOP_STRENGTH;
     float SELF_LOOP_RATIO;
+	float lRate;
 protected:
 	cuMatrix<float>* w;
 	cuMatrix<float>* wgrad;

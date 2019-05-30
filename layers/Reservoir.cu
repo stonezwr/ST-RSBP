@@ -519,11 +519,10 @@ void Reservoir::getGrad()
     
 }	
 
-void Reservoir::updateWeight()
+void Reservoir::updateWeight(int epoch)
 {
     dim3 block  = min((w->getLen() + 255)/ 256, 5120);
     dim3 thread = 256;
-
     assert(Config::instance()->getOptimizerType() == std::string("adam"));
     g_adam_vecAdd<<<block, thread, 0, Layers::instance()->get_stream()>>>(
         g1_w->getDev(),
@@ -533,7 +532,7 @@ void Reservoir::updateWeight()
         wgrad->getDev(),
         w->getDev(),
         w->getLen(),
-        Config::instance()->getLrate());
+		lRate/sqrt((float)epoch+1));
 	if(wgradTmp_reservoir!=NULL){
 		g_adam_vecAdd_reservoir<<<block, thread, 0, Layers::instance()->get_stream()>>>(
 			g1_w_reservoir->getDev(),
@@ -543,7 +542,7 @@ void Reservoir::updateWeight()
             wgrad_reservoir->getDev(),
             w_laterial->getDev(),
             w_laterial->getLen(),
-            Config::instance()->getLrate());
+			lRate/sqrt((float)epoch+1));
 	}
     b1_t *= 0.9f; b2_t *= 0.999f;
 }
@@ -575,6 +574,7 @@ Reservoir::Reservoir(std::string name)
     T_REFRAC  = config->m_t_ref;
     TAU_M     = config->m_tau_m;
     TAU_S     = config->m_tau_s;    
+	lRate     = config->m_lrate;
 
 	assert(batch == 1);
 	inputSize  = inputs->cols * inputs->channels / endTime;

@@ -24,7 +24,6 @@ void cuTrainSpikingNetwork(cuMatrixVector<bool>&x,
 	cuMatrix<int>* testY,
 	int batch,
 	int nclasses,
-	std::vector<float>&nlrate,
 	std::vector<float>&nMomentum,
 	std::vector<int>&epoCount,
 	cublasHandle_t handle);
@@ -38,6 +37,6 @@ void cuFreeSNNMemory(
 	cuMatrixVector<bool>&trainX, 
 	cuMatrixVector<bool>&testX);
 
-void getSpikingNetworkCost(int* y);
+void getSpikingNetworkCost(int* y, float* weights, int* vote, int start, int epoch);
 
 #endif

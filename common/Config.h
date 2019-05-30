@@ -281,7 +281,7 @@ public:
         int num_neurons, float vth, float t_refrac, float tau_m, float tau_s,
         float initW, int weight_connect, std::string initType, std::string weight_path,
         std::string lweight_path, std::string laterial_type, std::string r_dim, 
-        float local_inb_strength, float undesired_level, float desired_level, float margin, bool selfLoopStrength, float selfLoopRatio, std::map<std::string, std::string> ref_paths, bool has_bias, int dummy_freq)
+        float local_inb_strength, float undesired_level, float desired_level, float margin, bool selfLoopStrength, float selfLoopRatio, float lrate, std::map<std::string, std::string> ref_paths, bool has_bias, int dummy_freq)
     {
         m_name = name;
         m_type = type;
@@ -305,6 +305,7 @@ public:
         m_margin = margin;
         m_selfLoop_strength = selfLoopStrength;
         m_selfLoop_ratio = selfLoopRatio;
+		m_lrate = lrate;
         m_ref_weight_path = ref_paths[std::string("refWeightPath")];
         m_ref_lweight_path = ref_paths[std::string("refLWeightPath")];
         m_ref_output_train_path = ref_paths[std::string("refOutputTrainPath")];
@@ -345,6 +346,7 @@ public:
     float m_margin;
     float m_selfLoop_strength;
     float m_selfLoop_ratio;
+	float m_lrate;
     std::string m_ref_weight_path;
     std::string m_ref_lweight_path;
     std::string m_ref_output_train_path;
@@ -360,7 +362,7 @@ public:
         int num_neurons, float vth, float t_refrac, float tau_m, float tau_s,
         float initW, bool train_reservoir, int weight_connect, std::string initType, std::string weight_path,
         std::string lweight_path, std::string laterial_type, std::string r_dim, 
-        float local_inb_strength, float undesired_level, float desired_level, float margin, bool selfLoopStrength, float selfLoopRatio, std::map<std::string, std::string> ref_paths, bool has_bias, int dummy_freq)
+        float local_inb_strength, float undesired_level, float desired_level, float margin, bool selfLoopStrength, float selfLoopRatio, float lrate, std::map<std::string, std::string> ref_paths, bool has_bias, int dummy_freq)
     {
         m_name = name;
         m_type = type;
@@ -383,6 +385,7 @@ public:
         m_undesired_level = undesired_level;
         m_desired_level = desired_level;
         m_margin = margin;
+		m_lrate = lrate;
         m_selfLoop_strength = selfLoopStrength;
         m_selfLoop_ratio = selfLoopRatio;
         m_ref_weight_path = ref_paths[std::string("refWeightPath")];
@@ -428,6 +431,7 @@ public:
     float m_margin;
     float m_selfLoop_strength;
     float m_selfLoop_ratio;
+	float m_lrate;
     std::string m_ref_weight_path;
     std::string m_ref_lweight_path;
     std::string m_ref_output_train_path;
@@ -462,8 +466,6 @@ public:
 	float getMomentum(){
 		return momentum;
 	}
-	void setLrate(float _lrate){lrate = _lrate;}
-	float getLrate(){return lrate;}
 
 	void initPath(std::string path){
 		m_path = path;
@@ -671,7 +673,6 @@ private:
     ConfigDataset            *m_dataset;
 
 	float momentum;
-	float lrate;
 	int m_imageSize;
 	int m_classes;
     int m_endTime;

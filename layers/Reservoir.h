@@ -57,7 +57,7 @@ public:
 	virtual void feedforward();
 	virtual void backpropagation();
 	void getGrad();
-	void updateWeight();
+	void updateWeight(int epoch);
 	void clearMomentum();
     void loadRef();
 
@@ -180,6 +180,7 @@ protected:
     float UNDESIRED_LEVEL;
     float DESIRED_LEVEL;
     float MARGIN;
+	float lRate;
 protected:
 	cuMatrix<float>* w;
 	cuMatrix<float>* wgrad;

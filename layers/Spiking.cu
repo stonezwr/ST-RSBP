@@ -637,7 +637,7 @@ void Spiking::getGrad()
 }	
 
 
-void Spiking::updateWeight()
+void Spiking::updateWeight(int epoch)
 {
     dim3 block  = min((w->getLen() + 255)/ 256, 5120);
     dim3 thread = 256;
@@ -651,7 +651,7 @@ void Spiking::updateWeight()
             wgrad->getDev(),
             w->getDev(),
             w->getLen(),
-            Config::instance()->getLrate());
+			lRate/sqrt((float)epoch+1));
 		if(w_self != NULL){
 
 			g_adam_vecAdd<<<block, thread, 0, Layers::instance()->get_stream()>>>(
@@ -662,7 +662,7 @@ void Spiking::updateWeight()
 				wselfgrad->getDev(),
 				w_self->getDev(),
         	    w_self->getLen(),
-        	    Config::instance()->getLrate());
+				lRate/sqrt((float)epoch+1));
 		}
         b1_t *= 0.9f; b2_t *= 0.999f;
     } 
@@ -673,7 +673,7 @@ void Spiking::updateWeight()
             w->getDev(),
             w->getLen(), 
             Config::instance()->getMomentum(),
-            Config::instance()->getLrate());
+			lRate/sqrt((float)epoch+1));
     }
     // handle the bias here
 }
@@ -703,6 +703,7 @@ Spiking::Spiking(std::string name)
     T_REFRAC  = config->m_t_ref;
     TAU_M     = config->m_tau_m;
     TAU_S     = config->m_tau_s;    
+	lRate     = config->m_lrate;
 
 	assert(batch == 1);
 	inputSize  = inputs->cols * inputs->channels / endTime;

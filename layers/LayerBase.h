@@ -12,7 +12,7 @@ public:
 	virtual void feedforward() = 0;
 	virtual void backpropagation() = 0;
 	virtual void getGrad() = 0;
-	virtual void updateWeight() = 0;
+	virtual void updateWeight(int epoch) = 0;
 	virtual void clearMomentum() = 0;
 	virtual void save(FILE* file) = 0;
 	virtual void initFromCheckpoint(FILE* file) = 0;

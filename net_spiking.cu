@@ -211,7 +211,7 @@ void outputPredict(int* vote, int start)
 
 
 
-void getSpikingNetworkCost(int* y, float* weights, int* vote, int start)
+void getSpikingNetworkCost(int* y, float* weights, int* vote, int start, int epoch)
 {
     /*feedforward*/
     for(int i = 0; i < (int)spiking_que.size(); i++){
@@ -239,7 +239,7 @@ void getSpikingNetworkCost(int* y, float* weights, int* vote, int start)
 
         layer->backpropagation();
         layer->getGrad();
-        layer->updateWeight();
+        layer->updateWeight(epoch);
     }
     cudaStreamSynchronize(Layers::instance()->get_stream());
     getLastCudaError("updateWB");
@@ -447,15 +447,14 @@ void cuTrainSpikingNetwork(cuMatrixVector<bool>&x,
         cuMatrix<int>* testY,
         int batch,
         int nclasses,
-        std::vector<float>&nlrate,
         std::vector<float>&nMomentum,
         std::vector<int>&epoCount,
         cublasHandle_t handle)
 {
     char logStr[1024];
-    if(nlrate.size() != nMomentum.size() || nMomentum.size() != epoCount.size() || nlrate.size() != epoCount.size())
+    if(nMomentum.size() != epoCount.size())
     {
-        printf("nlrate, nMomentum, epoCount size not equal\n");
+        printf("nMomentum, epoCount size not equal\n");
         exit(0);
     }
 
@@ -464,16 +463,13 @@ void cuTrainSpikingNetwork(cuMatrixVector<bool>&x,
 
     int epochs = Config::instance()->getTestEpoch();
 
-    float lrate = 0.05f;
     float Momentum = 0.9f;
     int id = 0;
     //cudaProfilerStart();
     for (int epo = 0; epo < epochs; epo++) {
-        if (id >= (int)nlrate.size())
+        if (id >= (int)nMomentum.size())
             break;
-        lrate = nlrate[id];
         Momentum = nMomentum[id];
-        Config::instance()->setLrate(lrate);
         Config::instance()->setMomentum(Momentum);
         float start, end;
         start = (float)clock();
@@ -509,17 +505,18 @@ void cuTrainSpikingNetwork(cuMatrixVector<bool>&x,
                 y->getDev() + start, 
                 cuSampleWeight->getDev() + start, 
                 cuSTrVote->getDev() + start * nclasses, 
-                k * batch - start);
+                k * batch - start,
+				epo);
             cost += getSpikingCost();
             printf("\b\b\b\b\b\b\b\b\b");
         }
         cost /= (float)x.size();
 
         end = (float)clock();
-        sprintf(logStr, "epoch=%d time=%.03lfs cost=%f Momentum=%.06lf lrate=%.08lf\n",
+        sprintf(logStr, "epoch=%d time=%.03lfs cost=%f Momentum=%.06lf",
                 epo, (float) (end - start) / CLOCKS_PER_SEC,
                 cost,
-                Config::instance()->getMomentum(), Config::instance()->getLrate());
+                Config::instance()->getMomentum());
         LOG(logStr, "Result/log.txt");
 
         cuSTrCorrect->gpuClear();

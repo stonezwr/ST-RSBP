@@ -194,6 +194,7 @@ void Config:: get_layers_config(string &str){
             margin = get_word_float(layers[i], "MARGIN");    
 			float selfLoopStrength = get_word_float(layers[i], "selfLoopStrength");
 			float selfLoopRatio = get_word_float(layers[i], "selfLoopRatio");
+			float lrate=get_word_float(layers[i], "LearnRate");
         
             std::map<std::string, std::string> ref_paths;
             ref_paths[std::string("refWeightPath")] = get_word_type(layers[i], "refWeightPath");
@@ -207,7 +208,7 @@ void Config:: get_layers_config(string &str){
                          vth, t_ref, tau_m, tau_s, 
                          initW, weight_connect, initType, weight_path,
                          lweight_path, laterial_type, reservoir_dim, local_inb_strength,
-                         undesired_level, desired_level, margin, selfLoopStrength, selfLoopRatio, ref_paths, has_bias, dummy_freq);
+                         undesired_level, desired_level, margin, selfLoopStrength, selfLoopRatio, lrate, ref_paths, has_bias, dummy_freq);
             m_classes = num_classes;
             char logStr[256];
             sprintf(logStr, "\n\n********%s Layer********\n", type.c_str());LOG(logStr, "Result/log.txt");
@@ -231,6 +232,7 @@ void Config:: get_layers_config(string &str){
             sprintf(logStr, "MARGIN             : %f\n", margin);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "selfLoopStrength	: %f\n", selfLoopStrength);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "selfLoopRatio	    : %f\n", selfLoopRatio);LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "LearingRate        : %f\n", lrate);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refWeightPath      : %s\n", ref_paths[std::string("refWeightPath")].c_str());LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refLWeightPath     : %s\n", ref_paths[std::string("refLWeightPath")].c_str());LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refOuputTrainPath  : %s\n", ref_paths[std::string("refOutputTrainPath")].c_str());LOG(logStr, "Result/log.txt");
@@ -263,6 +265,7 @@ void Config:: get_layers_config(string &str){
             margin = get_word_float(layers[i], "MARGIN");    
 			float selfLoopStrength = get_word_float(layers[i], "selfLoopStrength");
 			float selfLoopRatio = get_word_float(layers[i], "selfLoopRatio");
+			float lrate=get_word_float(layers[i], "LearnRate");
         
             std::map<std::string, std::string> ref_paths;
             ref_paths[std::string("refWeightPath")] = get_word_type(layers[i], "refWeightPath");
@@ -276,7 +279,7 @@ void Config:: get_layers_config(string &str){
                          vth, t_ref, tau_m, tau_s, 
                          initW, train_reservoir, weight_connect, initType, weight_path,
                          lweight_path, laterial_type, reservoir_dim, local_inb_strength,
-                         undesired_level, desired_level, margin, selfLoopStrength, selfLoopRatio, ref_paths, has_bias, dummy_freq);
+                         undesired_level, desired_level, margin, selfLoopStrength, selfLoopRatio,lrate, ref_paths, has_bias, dummy_freq);
             m_classes = num_classes;
             char logStr[256];
             sprintf(logStr, "\n\n********%s Layer********\n", type.c_str());LOG(logStr, "Result/log.txt");
@@ -301,6 +304,7 @@ void Config:: get_layers_config(string &str){
             sprintf(logStr, "MARGIN             : %f\n", margin);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "selfLoopStrength	: %f\n", selfLoopStrength);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "selfLoopRatio	    : %f\n", selfLoopRatio);LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "LearingRate        : %f\n", lrate);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refWeightPath      : %s\n", ref_paths[std::string("refWeightPath")].c_str());LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refLWeightPath     : %s\n", ref_paths[std::string("refLWeightPath")].c_str());LOG(logStr, "Result/log.txt");
             sprintf(logStr, "refOuputTrainPath  : %s\n", ref_paths[std::string("refOutputTrainPath")].c_str());LOG(logStr, "Result/log.txt");

@@ -45,6 +45,7 @@ initW = 1;
 initType = Bernoulli;
 selfLoopStrength = 0;
 selfLoopRatio = 1;
+LearningRate = 0.001;
 ]
 
 [
@@ -62,6 +63,7 @@ Train_Reservoir = true;
 initType = Bernoulli;
 laterialType = RESERVOIR;  # the laterical connections type: RESERVOIR or LOCAL_INHIBITION # 
 reservoirDim = 10 x 10 x 5;
+LearningRate = 0.001;
 ]
 
 [
@@ -81,5 +83,6 @@ localInbStrength = 1;
 DESIRED_LEVEL = 35;
 UNDESIRED_LEVEL = 5;
 MARGIN = 5;
+LearningRate = 0.001;
 ]
 

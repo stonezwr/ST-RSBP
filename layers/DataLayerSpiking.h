@@ -20,7 +20,7 @@ public:
 	void backpropagation(){};
     void verify(const std::string& phrase){};
 	void getGrad(){};
-	void updateWeight(){};
+	void updateWeight(int epoch){};
 	void clearMomentum(){};
 
 	void calCost(){};

@@ -134,17 +134,16 @@ void runMnist(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.001f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+        nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
@@ -207,17 +206,16 @@ void runNMnist(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.001f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+         nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
@@ -283,17 +281,16 @@ void runFashionMnist(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.001f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+        nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
@@ -355,17 +352,16 @@ void runTi46Alpha(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
     int epochs = Config::instance()->getTestEpoch();
 
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.005f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+        nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
@@ -424,17 +420,16 @@ void runTi46Digits(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.005f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+       nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
@@ -494,17 +489,16 @@ void runNTidigits(){
     
 
 	//* learning rate
-	std::vector<float> nlrate;
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
-        nlrate.push_back(0.005f/sqrt(i+1)); nMomentum.push_back(0.90f);  epoCount.push_back(1);
+        nMomentum.push_back(0.90f);  epoCount.push_back(1);
     }
 
 	start = clock();
-	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nlrate, nMomentum, epoCount, handle);
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
 	end = clock();
 
 	char logStr[1024];
