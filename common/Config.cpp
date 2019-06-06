@@ -194,7 +194,7 @@ void Config:: get_layers_config(string &str){
             margin = get_word_float(layers[i], "MARGIN");    
 			float selfLoopStrength = get_word_float(layers[i], "selfLoopStrength");
 			float selfLoopRatio = get_word_float(layers[i], "selfLoopRatio");
-			float lrate=get_word_float(layers[i], "LearnRate");
+			float lrate=get_word_float(layers[i], "LearningRate");
         
             std::map<std::string, std::string> ref_paths;
             ref_paths[std::string("refWeightPath")] = get_word_type(layers[i], "refWeightPath");
@@ -265,7 +265,7 @@ void Config:: get_layers_config(string &str){
             margin = get_word_float(layers[i], "MARGIN");    
 			float selfLoopStrength = get_word_float(layers[i], "selfLoopStrength");
 			float selfLoopRatio = get_word_float(layers[i], "selfLoopRatio");
-			float lrate=get_word_float(layers[i], "LearnRate");
+			float lrate=get_word_float(layers[i], "LearningRate");
         
             std::map<std::string, std::string> ref_paths;
             ref_paths[std::string("refWeightPath")] = get_word_type(layers[i], "refWeightPath");
