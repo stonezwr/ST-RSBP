@@ -93,15 +93,15 @@ void runMnist(){
     
     //* initialize the configuration
 	Config * config = Config::instance();
-    config->initPath("Config/SpikingMnistConfig.txt");
+    config->initPath("Config/MNIST.txt");
     ConfigDataSpiking * ds_config = (ConfigDataSpiking*)config->getLayerByName("data");
     int input_neurons = ds_config->m_inputNeurons;
     int end_time = config->getEndTime();
     int train_samples = config->getTrainSamples();
     int test_samples = config->getTestSamples();
 
- 	readSpikingMnistData(trainX, trainY, "mnist/train-images-idx3-ubyte", "mnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
- 	readSpikingMnistData(testX , testY, "mnist/t10k-images-idx3-ubyte", "mnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
+ 	readSpikingMnistData(trainX, trainY, "../mnist/train-images-idx3-ubyte", "../mnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
+ 	readSpikingMnistData(testX , testY, "../mnist/t10k-images-idx3-ubyte", "../mnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
 
 	MemoryMonitor::instance()->printCpuMemory();
 	MemoryMonitor::instance()->printGpuMemory();
@@ -167,7 +167,7 @@ void runNMnist(){
     
     //* initialize the configuration
 	Config * config = Config::instance();
-    config->initPath("Config/NMnistConfig.txt");
+    config->initPath("Config/NMNIST.txt");
 
     ConfigDataSpiking * ds_config = (ConfigDataSpiking*)config->getLayerByName("data");
     int input_neurons = ds_config->m_inputNeurons;
@@ -247,8 +247,8 @@ void runFashionMnist(){
     int train_samples = config->getTrainSamples();
     int test_samples = config->getTestSamples();
 
- 	readSpikingMnistData(trainX, trainY, "../../../fmnist/train-images-idx3-ubyte", "../../../fmnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
- 	readSpikingMnistData(testX , testY, "../../../fmnist/t10k-images-idx3-ubyte", "../../../fmnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
+ 	readSpikingMnistData(trainX, trainY, "../fmnist/train-images-idx3-ubyte", "../fmnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
+ 	readSpikingMnistData(testX , testY, "../fmnist/t10k-images-idx3-ubyte", "../fmnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
 
 	MemoryMonitor::instance()->printCpuMemory();
 	MemoryMonitor::instance()->printGpuMemory();

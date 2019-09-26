@@ -15,8 +15,8 @@ END_TIME =  700;                 #The spike train duration#
 
 TRAIN_SAMPLES = 2475;              # number of train/test samples#
 TEST_SAMPLES = 2474;
-TRAIN_DATA_PATH = ../../../n_tidigits_ab/Train/;  # train and test path for the speech samples #
-TEST_DATA_PATH = ../../../n_tidigits_ab/Test/;    
+TRAIN_DATA_PATH = ../n_tidigits_ab/Train/;  # train and test path for the speech samples #
+TEST_DATA_PATH = ../n_tidigits_ab/Test/;    
 
 [
 LAYER = DATASPIKING;
