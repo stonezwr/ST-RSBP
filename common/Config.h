@@ -119,24 +119,30 @@ private:
 class ConfigDataset
 {
 public:
-    ConfigDataset(std::string train_path, std::string test_path, int train_samples, int test_samples, int train_per_class, int test_per_class)
+    ConfigDataset(std::string train_path, std::string train_label, std::string test_path, std::string test_label, int train_samples, int test_samples, int train_per_class, int test_per_class)
     {
         m_trainPath = train_path;
+        m_trainLabel = train_label;
         m_testPath = test_path;
+        m_testLabel = test_label;
         m_trainSamples = train_samples;
         m_testSamples = test_samples;
         m_trainPerClass = train_per_class;
         m_testPerClass = test_per_class;    
     }
     std::string getTrainPath(){return m_trainPath;}
+    std::string getTrainLabel(){return m_trainLabel;}
     std::string getTestPath(){return m_testPath;}
+    std::string getTestLabel(){return m_testLabel;}
     int getTrainSamples(){return m_trainSamples;}
     int getTestSamples(){return m_testSamples;}
     int getTrainPerClass(){return m_trainPerClass;}
     int getTestPerClass(){return m_testPerClass;}
 private:
     std::string m_trainPath;
+    std::string m_trainLabel;
     std::string m_testPath;
+    std::string m_testLabel;
     int m_trainSamples;
     int m_testSamples;
     int m_trainPerClass;
@@ -441,6 +447,73 @@ public:
 	bool m_train_reservoir;
 };
 
+class ConfigConvSpiking : public ConfigBase
+{
+public:
+	ConfigConvSpiking(std::string name, std::string type, std::string input, int kernelSize, 
+              int amount, int padding, float initW, std::string initType, float vth,
+              float t_refrac, float tau_m, float tau_s, float lrate, std::string weight_path,
+              std::map<std::string, std::string> ref_paths)
+    {
+        m_kernelSize = kernelSize;
+        m_padding = padding;
+        m_amount = amount;
+        m_name = name;
+        m_input = input;
+        m_type = type;
+        m_initW = initW;
+        m_initType = initType;
+        m_vth = vth;
+        m_t_ref = t_refrac;
+        m_tau_m = tau_m;
+        m_tau_s = tau_s;
+		m_lrate = lrate;
+        m_weightPath = weight_path;
+        m_ref_weight_path = ref_paths[std::string("refWeightPath")];
+        m_ref_output_train_path = ref_paths[std::string("refOutputTrainPath")];
+        m_ref_output_test_path = ref_paths[std::string("refOutputTestPath")];
+	}
+    int m_kernelSize;
+    int m_padding;
+    int m_amount;
+    float m_vth;
+    int m_t_ref;
+    float m_tau_m;
+    float m_tau_s;
+	float m_lrate;
+    std::string m_weightPath;
+    std::string m_ref_weight_path;
+    std::string m_ref_output_train_path;
+    std::string m_ref_output_test_path;
+};
+
+class ConfigPoolingSpiking : public ConfigBase
+{
+public:
+    ConfigPoolingSpiking(std::string name, std::string type, std::string input, int size, 
+            int skip, float vth, float t_refrac, float tau_m, float tau_s, std::map<std::string, std::string> ref_paths)
+    {
+        m_name = name;
+        m_input = input;
+        m_type = type;
+        m_size = size;
+        m_skip = skip;
+        m_vth = vth;
+        m_t_ref = t_refrac;
+        m_tau_m = tau_m;
+        m_tau_s = tau_s;
+        m_ref_output_train_path = ref_paths[std::string("refOutputTrainPath")];
+        m_ref_output_test_path = ref_paths[std::string("refOutputTestPath")];
+    }
+    int m_size;
+    int m_skip;
+    float m_vth;
+    int m_t_ref;
+    float m_tau_m;
+    float m_tau_s;
+    std::string m_ref_output_train_path;
+    std::string m_ref_output_test_path;
+};
 
 class ConfigHorizontal
 {
@@ -606,8 +679,16 @@ public:
         return m_dataset->getTrainPath();
     }
 
+    std::string getTrainLabel(){
+        return m_dataset->getTrainLabel();
+    }
+
     std::string getTestPath(){
         return m_dataset->getTestPath();
+    }
+
+    std::string getTestLabel(){
+        return m_dataset->getTestLabel();
     }
 
     int getTrainSamples(){

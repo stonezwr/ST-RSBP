@@ -399,7 +399,7 @@ void Spiking::backpropagation()
         preFireCount_format->getDev(),
     	fireCount->getDev(),
 		effectPoly->getDev(),
-		50,
+		100,
 		5,
 		inputSize,
 		outputSize,
@@ -797,8 +797,10 @@ Spiking::Spiking(std::string name)
 		sumEffectRatio = new cuMatrix<float>(outputSize, 1, 1);
     }
 
-    effectPoly = new cuMatrix<float>(50, 5, 1);
-	loadPoly("./Effect_Ratio_file/p_Tau_64_400.txt", 50, 5, effectPoly);
+    effectPoly = new cuMatrix<float>(100, 5, 1);
+	std::string filename=std::string("./Effect_Ratio_file/p_Tau_")+std::to_string(int(TAU_M))+std::string("_")+std::to_string(endTime)+std::string("-100.txt");
+	loadPoly(filename, 100, 5, effectPoly);
+	//loadPoly("./Effect_Ratio_file/p_Tau_64_400.txt", 50, 5, effectPoly);
 
     momentum_w = new cuMatrix<float>(outputSize, inputSize, 1);
     momentum_b = new cuMatrix<float>(outputSize, 1, 1);
@@ -1133,7 +1135,7 @@ void Spiking::initLocalInhibition(float strength)
     w_laterial->toGpu();
 }
 
-void Spiking::loadPoly(const std::string& filename, int out_size, int degree, cuMatrix<float>* poly){
+void Spiking::loadPoly(std::string& filename, int out_size, int degree, cuMatrix<float>* poly){
     ifstream f_in(filename.c_str());
     if(!f_in.is_open()){
         printf("Cannot open the file: %s\n", filename.c_str());
@@ -1458,11 +1460,11 @@ __global__ void g_getLateralFactor_output(
             float d_l = (f_cnt_l > 0 || (f_cnt_l == 0 && l_idx == cls)) ? 1 / vth : 0;
             // j --> l
             float e_jl = d_Spiking_accumulate_effect_step(output_time, output_time, f_cnt_l, f_cnt_j, l_idx, j_idx, outputSize, outputSize, endTime, T_REFRAC, TAU_M, TAU_S);
-            float effect_ratio_jl = (f_cnt_j == 0 || f_cnt_l == 0) ? 0 : e_jl / f_cnt_j;
+            float effect_ratio_jl = (f_cnt_j == 0 || f_cnt_l == 0) ? 0.5 : e_jl / f_cnt_j;
             
             // l --> j
             float e_lj = d_Spiking_accumulate_effect_step(output_time, output_time, f_cnt_j, f_cnt_l, j_idx, l_idx, outputSize, outputSize, endTime, T_REFRAC, TAU_M, TAU_S);
-            float effect_ratio_lj = (f_cnt_l == 0 || f_cnt_j == 0) ? 0 : e_lj / f_cnt_l;
+            float effect_ratio_lj = (f_cnt_l == 0 || f_cnt_j == 0) ? 0.5 : e_lj / f_cnt_l;
 
             d_sum[tid] += effect_ratio_jl * d_l * effect_ratio_lj * d_j; 
         }
@@ -1963,7 +1965,7 @@ __global__ void g_Spiking_effect_ratio(
 		int o_cnt_tmp = o_cnt;
 		float ratio;
 		if(o_cnt == 0)
-			ratio=0;
+			ratio=0.5;
 		else{
 			o_cnt_tmp = o_cnt_tmp <= out_size? o_cnt_tmp : out_size;
 			o_cnt_tmp = o_cnt_tmp > 0? o_cnt_tmp : 1;
@@ -2007,7 +2009,7 @@ __global__ void g_Spiking_final_effect_ratio(
 			float e=acc_effect[i_idx + o_idx * inputSize];
             int o_cnt = output_fireCount[o_idx];
             int i_cnt = input_fireCount[i_idx];
-            float ratio = i_cnt == 0 || o_cnt == 0 ? 0 : e / float(i_cnt);
+            float ratio = i_cnt == 0 || o_cnt == 0 ? 0.5 : e / float(i_cnt);
 			float sum_e = sumEffect[o_idx];
             effectRatio[i_idx + o_idx * inputSize] = ratio * w[i_idx + o_idx * inputSize]/sum_e;
         }

@@ -50,6 +50,7 @@ set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}
 #  -G
 #  -g
   -rdc=true
+  -w
   )
 
 set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}

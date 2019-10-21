@@ -26,6 +26,7 @@ void runFashionMnist();
 void runTi46Alpha();
 void runTi46Digits();
 void runNTidigits();
+void runSpikingCNNMnist();
 bool init(cublasHandle_t& handle);
 
 std::vector<int> g_argv;
@@ -43,7 +44,7 @@ int main (int argc, char** argv)
 		g_argv.push_back(atoi(argv[1]));
 		g_argv.push_back(atoi(argv[2]));
 	}
-	printf("1. MNIST\n2. NMNIST\n3. Fashion-MNIST\n4. TI46_Alpha\n5. TI46_Digits\n6. N-Tidigits\n Choose the dataSet to run:");
+	printf("1. MNIST\n2. NMNIST\n3. Fashion-MNIST\n4. TI46_Alpha\n5. TI46_Digits\n6. N-Tidigits\n7. Spiking CNN MNIST\n Choose the dataSet to run:");
 	int cmd; 
 	if(g_argv.size() >= 2)
 		cmd = g_argv[0];
@@ -64,6 +65,8 @@ int main (int argc, char** argv)
         runTi46Digits();
     else if(cmd == 6)
         runNTidigits();
+    else if(cmd == 7)
+		runSpikingCNNMnist();
 	return EXIT_SUCCESS;
 }
 
@@ -100,8 +103,8 @@ void runMnist(){
     int train_samples = config->getTrainSamples();
     int test_samples = config->getTestSamples();
 
- 	readSpikingMnistData(trainX, trainY, "../mnist/train-images-idx3-ubyte", "../mnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
- 	readSpikingMnistData(testX , testY, "../mnist/t10k-images-idx3-ubyte", "../mnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
+ 	readSpikingMnistData(trainX, trainY, config->getTrainPath(), config->getTrainLabel(), train_samples, input_neurons, end_time);
+ 	readSpikingMnistData(testX , testY, config->getTestPath(), config->getTestLabel(),  test_samples, input_neurons, end_time);
 
 	MemoryMonitor::instance()->printCpuMemory();
 	MemoryMonitor::instance()->printGpuMemory();
@@ -247,8 +250,8 @@ void runFashionMnist(){
     int train_samples = config->getTrainSamples();
     int test_samples = config->getTestSamples();
 
- 	readSpikingMnistData(trainX, trainY, "../fmnist/train-images-idx3-ubyte", "../fmnist/train-labels-idx1-ubyte", train_samples, input_neurons, end_time);
- 	readSpikingMnistData(testX , testY, "../fmnist/t10k-images-idx3-ubyte", "../fmnist/t10k-labels-idx1-ubyte",  test_samples, input_neurons, end_time);
+ 	readSpikingMnistData(trainX, trainY, config->getTrainPath(), config->getTrainLabel(), train_samples, input_neurons, end_time);
+ 	readSpikingMnistData(testX , testY, config->getTestPath(), config->getTestLabel(),  test_samples, input_neurons, end_time);
 
 	MemoryMonitor::instance()->printCpuMemory();
 	MemoryMonitor::instance()->printGpuMemory();
@@ -492,6 +495,77 @@ void runNTidigits(){
 	std::vector<float> nMomentum;
 	std::vector<int> epoCount;
 
+    int epochs = Config::instance()->getTestEpoch();
+    for(int i = 0; i < epochs; ++i){
+        nMomentum.push_back(0.90f);  epoCount.push_back(1);
+    }
+
+	start = clock();
+	cuTrainSpikingNetwork(trainX, trainY, testX, testY, batch, nclasses, nMomentum, epoCount, handle);
+	end = clock();
+
+	char logStr[1024];
+	sprintf(logStr, "training time hours = %f\n", 
+		(end - start) / CLOCKS_PER_SEC / 3600);
+	LOG(logStr, "Result/log.txt");
+}
+
+void runSpikingCNNMnist(){
+	const int nclasses = 10;
+
+ 	//*state and cublas handle
+ 	cublasHandle_t handle;
+	init(handle);
+	
+ 	//* read the data from disk
+	cuMatrixVector<bool> trainX;
+	cuMatrixVector<bool> testX;
+ 	cuMatrix<int>* trainY, *testY;
+    
+    //* initialize the configuration
+	Config * config = Config::instance();
+    config->initPath("Config/SpikingCNNMnistConfig.txt");
+
+    ConfigDataSpiking * ds_config = (ConfigDataSpiking*)config->getLayerByName("data");
+    int input_neurons = ds_config->m_inputNeurons;
+    int end_time = config->getEndTime();
+    int train_samples = config->getTrainSamples();
+    int test_samples = config->getTestSamples();
+ 	readSpikingMnistData(trainX, trainY, config->getTrainPath(), config->getTrainLabel(), train_samples, input_neurons, end_time);
+ 	readSpikingMnistData(testX , testY, config->getTestPath(), config->getTestLabel(),  test_samples, input_neurons, end_time);
+	MemoryMonitor::instance()->printCpuMemory();
+	MemoryMonitor::instance()->printGpuMemory();
+
+ 	//* build SNN net
+ 	int ImgSize = 28; // fixed here for spiking mnist
+	Config::instance()->setImageSize(ImgSize);
+ 	int nsamples = trainX.size();
+
+ 	int batch = Config::instance()->getBatchSize();
+	float start,end;
+    
+	int cmd;
+	cuInitDistortionMemery(batch, ImgSize);
+    
+	printf("1. random init weight\n2. Read weight from the checkpoint\nChoose the way to init weight:");
+
+	if(g_argv.size() >= 2)
+		cmd = g_argv[1];
+	else 
+		if(1 != scanf("%d", &cmd)){
+            LOG("scanf fail", "result/log.txt");
+        }
+    
+	buildSpikingNetwork(trainX.size(), testX.size());
+
+    
+	if(cmd == 2)
+		cuReadSpikingNet("Result/checkPoint.txt");
+    
+
+	//* learning rate
+	std::vector<float> nMomentum;
+	std::vector<int> epoCount;
     int epochs = Config::instance()->getTestEpoch();
     for(int i = 0; i < epochs; ++i){
         nMomentum.push_back(0.90f);  epoCount.push_back(1);

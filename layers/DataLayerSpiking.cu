@@ -218,8 +218,8 @@ void DataLayerSpiking::getBatchSpikesWithPreproc(cuMatrixVector<bool>& inputs, i
     int id = 1 - this->myId;
     for(size_t i = 0; i < this->batchSamplesFloat[id].size(); i++){
         memcpy(this->batchSamplesFloat[id][i]->getHost(), inputs[i + start]->getHostRawImg(), sizeof(float) * this->batchSamplesFloat[id][i]->getLen());
-        this->batchSamplesFloat[id][i]->toGpu(this->stream1);
-        this->batchSpeeches[id][i]->toGpu(this->stream1);
+        this->batchSamplesFloat[id][i]->toGpu();
+        this->batchSpeeches[id][i]->toGpu();
     }
     // apply the distortation
     cuApplyDistortion(batchSamplesFloat[id].m_devPoint, processOutputs.m_devPoint, batch, outputDim); 
@@ -264,7 +264,7 @@ void DataLayerSpiking::getBatchSpikes(cuMatrixVector<bool>& inputs, int start){
     for(size_t i = 0; i < this->batchSpeeches[id].size(); i++){
         inputs[i+start]->sparseToDense();
         memcpy(this->batchSpeeches[id][i]->getHost(), inputs[i + start]->getHost(), sizeof(bool) * this->batchSpeeches[id][i]->getLen());
-        this->batchSpeeches[id][i]->toGpu(this->stream1);
+        this->batchSpeeches[id][i]->toGpu();
         inputs[i+start]->freeCpuMem();
         //this->batchSpeeches[i]->toGpu();
     }

@@ -27,6 +27,10 @@ END_TIME = 400;                 #The spike train duration#
 
 TRAIN_SAMPLES = 60000;              # number of train/test samples#
 TEST_SAMPLES = 10000;
+TRAIN_DATA_PATH = ../mnist/train-images-idx3-ubyte;
+TRAIN_LABEL_PATH= ../mnist/train-labels-idx1-ubyte;
+TEST_DATA_PATH = ../mnist/t10k-images-idx3-ubyte;
+TEST_LABEL_PATH= ../mnist/t10k-labels-idx1-ubyte;
 
 [
 LAYER = DATASPIKING;

@@ -67,7 +67,7 @@ public:
     void initBiasFromDumpfile(const std::string& filename, cuMatrix<float>*& cuW);
     void initFromDumpfile(const std::string& filename, cuMatrix<float>*& cuW);
 	void save(FILE* file);
-	void loadPoly(const std::string& filename, int out_size, int degree, cuMatrix<float>* poly);
+	void loadPoly(std::string& filename, int out_size, int degree, cuMatrix<float>* poly);
 	void linearSolverQR(cuMatrix<float>* LHS, cuMatrix<float>* RHS, cuMatrix<float>* effectRatio, int lda, int n, int inputSize);
     void verify(const std::string& phrase);
 	void vec_norm(int n, const float *x);

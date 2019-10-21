@@ -305,7 +305,7 @@ void Reservoir::backpropagation()
         preFireCount_format->getDev(),
     	fireCount->getDev(),
 		effectPoly->getDev(),
-		50,
+		100,
 		5,
 		inputSize,
 		outputSize,
@@ -320,7 +320,7 @@ void Reservoir::backpropagation()
 		sumEffectRatioReservoir->getDev(),
     	fireCount->getDev(),
 		effectPoly->getDev(),
-		50,
+		100,
 		5,
 		outputSize,
 		threshold);
@@ -644,8 +644,10 @@ Reservoir::Reservoir(std::string name)
     matrixLHS = new cuMatrix<float>(outputSize, outputSize, 1);
     matrixRHS = new cuMatrix<float>(outputSize, inputSize, 1);
 
-    effectPoly = new cuMatrix<float>(50, 5, 1);
-	loadPoly("./Effect_Ratio_file/p_Tau_64_600.txt", 50, 5, effectPoly);
+    effectPoly = new cuMatrix<float>(100, 5, 1);
+	std::string filename=std::string("./Effect_Ratio_file/p_Tau_")+std::to_string(int(TAU_M))+std::string("_")+std::to_string(endTime)+std::string("-100.txt");
+	loadPoly(filename, 100, 5, effectPoly);
+	//loadPoly("./Effect_Ratio_file/p_Tau_64_600.txt", 50, 5, effectPoly);
 
     momentum_w = new cuMatrix<float>(outputSize, inputSize, 1);
     momentum_b = new cuMatrix<float>(outputSize, 1, 1);
@@ -993,7 +995,7 @@ void Reservoir::initReservoirConnection(const std::vector<int>& reservoirDim)
 	reservoir_connection->toGpu();
 }
 
-void Reservoir::loadPoly(const std::string& filename, int out_size, int degree, cuMatrix<float>* poly){
+void Reservoir::loadPoly(std::string& filename, int out_size, int degree, cuMatrix<float>* poly){
     ifstream f_in(filename.c_str());
     if(!f_in.is_open()){
         printf("Cannot open the file: %s\n", filename.c_str());
@@ -1422,7 +1424,7 @@ __global__ void g_Reservoir_effect_ratio_LHS(
 					float e=reservoirEffect[i_idx + o_idx * outputSize];
 					int o_cnt = output_fireCount[o_idx];
 					int i_cnt = output_fireCount[i_idx];
-					float ratio = i_cnt == 0 || o_cnt == 0 ? 0 : e / float(i_cnt);
+					float ratio = i_cnt == 0 || o_cnt == 0 ? 0.5 : e / float(i_cnt);
 					m_LHS[i_idx + o_idx*outputSize] = -ratio*w/vth;
 				}else{
 					m_LHS[i_idx + o_idx*outputSize] = 0;
@@ -1463,7 +1465,7 @@ __global__ void g_Reservoir_effect_ratio_RHS(
 			float e=acc_effect[i_idx + o_idx * inputSize];
 			int o_cnt = output_fireCount[o_idx];
 			int i_cnt = input_fireCount[i_idx];
-			float ratio = i_cnt == 0 || o_cnt == 0 ? 0 : e / float(i_cnt);
+			float ratio = i_cnt == 0 || o_cnt == 0 ? 0.5 : e / float(i_cnt);
 			m_RHS[i_idx + o_idx*inputSize] = w*ratio;
         }
     }

@@ -312,6 +312,71 @@ void Config:: get_layers_config(string &str){
             sprintf(logStr, "ADD_BIAS           : %d\n", has_bias);LOG(logStr, "Result/log.txt");
             sprintf(logStr, "BIAS_FREQ          : %d\n", dummy_freq);LOG(logStr, "Result/log.txt");
         }
+        else if(type == std::string("CONVSPIKING")){
+            int ks = get_word_int(layers[i], "KERNEL_SIZE");
+            int ka = get_word_int(layers[i], "KERNEL_AMOUNT");
+            int pd = get_word_int(layers[i], "PADDING");
+            float initW = get_word_float(layers[i], "initW");
+            std::string initType = get_word_type(layers[i], "initType");
+
+            float vth = get_word_float(layers[i], "VTH");
+            int t_ref = get_word_int(layers[i], "T_REFRAC");
+            float tau_m = get_word_float(layers[i], "TAU_M");
+            float tau_s = get_word_float(layers[i], "TAU_S");
+			float lrate=get_word_float(layers[i], "LearningRate");
+
+            std::string weight_path = get_word_type(layers[i], "weightPath");
+
+            std::map<std::string, std::string> ref_paths;
+            ref_paths[std::string("refWeightPath")] = get_word_type(layers[i], "refWeightPath");
+            ref_paths[std::string("refOutputTrainPath")]=get_word_type(layers[i],"refOutputTrainPath");
+            ref_paths[std::string("refOutputTestPath")]=get_word_type(layers[i],"refOutputTestPath");
+
+            layer = new ConfigConvSpiking(name, type, input, ks, ka, pd, initW, initType, 
+                    vth, t_ref, tau_m, tau_s, lrate, weight_path, ref_paths);
+            char logStr[256];
+            sprintf(logStr,"\n\n********ConvSpiking layer********\n"); LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "NAME          : %s\n", name.c_str());     LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "INPUT         : %s\n", input.c_str());    LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "KERNEL_SIZE   : %d\n", ks);               LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "KERNEL_AMOUNT : %d\n", ka);               LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "PADDING       : %d\n", pd);               LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "initW         : %f\n", initW);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "VTH           : %f\n", vth);              LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "T_REFRAC      : %d\n", t_ref);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "TAU_M         : %f\n", tau_m);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "TAU_S         : %f\n", tau_s);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "LearingRate        : %f\n", lrate);LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "refWeightPath : %s\n", ref_paths[std::string("refWeightPath")].c_str());LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "refOuputTrainPath  : %s\n", ref_paths[std::string("refOutputTrainPath")].c_str());LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "refOutputTestPath  : %s\n", ref_paths[std::string("refOutputTestPath")].c_str());LOG(logStr, "Result/log.txt"); 
+        }
+        else if(type == std::string("POOLINGSPIKING")){
+            int size = get_word_int(layers[i], "SIZE");
+            int skip = get_word_int(layers[i], "SKIP");
+            float vth = get_word_float(layers[i], "VTH");
+            int t_ref = get_word_int(layers[i], "T_REFRAC");
+            float tau_m = get_word_float(layers[i], "TAU_M");
+            float tau_s = get_word_float(layers[i], "TAU_S");
+
+            std::map<std::string, std::string> ref_paths;
+            ref_paths[std::string("refOutputTrainPath")]=get_word_type(layers[i], "refOutputTrainPath");
+            ref_paths[std::string("refOutputTestPath")]=get_word_type(layers[i], "refOutputTestPath");
+
+            layer = new ConfigPoolingSpiking(name, type, input,size,skip, vth, t_ref, tau_m, tau_s, ref_paths);
+            char logStr[256];
+            sprintf(logStr, "\n\n*****Pooling Spiking layer*****\n"); LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "NAME          : %s\n", name.c_str());LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "INPUT         : %s\n", input.c_str());LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "size          : %d\n", size);LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "skip          : %d\n", skip);LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "VTH           : %f\n", vth);              LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "T_REFRAC      : %d\n", t_ref);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "TAU_M         : %f\n", tau_m);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "TAU_S         : %f\n", tau_s);            LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "refOuputTrainPath  : %s\n", ref_paths[std::string("refOutputTrainPath")].c_str());LOG(logStr, "Result/log.txt");
+            sprintf(logStr, "refOutputTestPath  : %s\n", ref_paths[std::string("refOutputTestPath")].c_str());LOG(logStr, "Result/log.txt");
+        }
 
         insertLayerByName(name, layer);
         if(type == std::string("DATASPIKING")){
@@ -445,15 +510,21 @@ void Config::init(std::string path)
 
     /*DATASET*/
     std::string train_path = get_word_type(m_configStr, "TRAIN_DATA_PATH");
+    std::string train_label = get_word_type(m_configStr, "TRAIN_LABEL_PATH");
     std::string test_path = get_word_type(m_configStr, "TEST_DATA_PATH");
+    std::string test_label = get_word_type(m_configStr, "TEST_LABEL_PATH");
     int train_samples = get_word_int(m_configStr, "TRAIN_SAMPLES");
     int test_samples  = get_word_int(m_configStr, "TEST_SAMPLES");
     int train_per_class = get_word_int(m_configStr, "TRAIN_PER_CLASS");
     int test_per_class = get_word_int(m_configStr, "TEST_PER_CLASS");
-    m_dataset = new ConfigDataset(train_path, test_path, train_samples, test_samples, train_per_class, test_per_class);
+    m_dataset = new ConfigDataset(train_path, train_label, test_path, test_label, train_samples, test_samples, train_per_class, test_per_class);
     sprintf(logStr, "Train data path       : %s\n", train_path.c_str());
     LOG(logStr, "Result/log.txt");
+    sprintf(logStr, "Train label path       : %s\n", train_label.c_str());
+    LOG(logStr, "Result/log.txt");
     sprintf(logStr, "Test data path        : %s\n", test_path.c_str());
+    LOG(logStr, "Result/log.txt");
+    sprintf(logStr, "Test label path        : %s\n", test_label.c_str());
     LOG(logStr, "Result/log.txt");
     sprintf(logStr, "Train samples         : %d\n", train_samples);
     LOG(logStr, "Result/log.txt");

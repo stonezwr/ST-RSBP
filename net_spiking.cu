@@ -14,6 +14,9 @@
 #include "layers/DataLayerSpiking.h"
 #include "layers/Spiking.h"
 #include "layers/Reservoir.h"
+#include "layers/ConvSpiking.h"
+#include "layers/PoolingSpiking.h"
+//#include "layers/SoftMaxSpiking.h"
 #include <queue>
 #include <set>
 
@@ -83,6 +86,15 @@ void buildSpikingNetwork(int trainLen, int testLen)
         else if(top->m_type == std::string("RESERVOIR")){
             new Reservoir(top->m_name);
         }
+        else if(top->m_type == std::string("CONVSPIKING")){
+            new ConvSpiking(top->m_name);
+        }
+        else if(top->m_type == std::string("POOLINGSPIKING")){
+            new PoolingSpiking(top->m_name);
+        } 
+        //else if(top->m_type == std::string("SOFTMAXSPIKING")){
+        //    new SoftMaxSpiking(top->m_name);
+        //}
 
         sprintf(logStr, "layer %15s:", top->m_name.c_str());
         LOG(logStr, "Result/log.txt");
