@@ -75,6 +75,8 @@ Fashion-MNIST: [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist)
 TI46: Download from [TI46](https://catalog.ldc.upenn.edu/LDC93S9) and preprocess it using Lyon ear model using [TI46_Lyon_ear.m](https://github.com/stonezwr/ST-RSBP/tree/master/other_tools/Lyon_ear_model)
 
 ## Run the code 
+Before running, 
+use [eij_function.m](https://github.com/stonezwr/ST-RSBP/tree/master/other_tools/Effect_Ratio_Generator/eij_function.m) to generate eij file. and put the file in [Effect_Ratio_file](https://github.com/stonezwr/ST-RSBP/tree/master/Effect_Ratio_file).
 By default, put the data in the previous directory "../" Then run 
 ```sh
 $ ./build/CUDA-RSNN

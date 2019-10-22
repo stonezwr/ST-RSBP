@@ -28,4 +28,5 @@ for in=num_oj
     p = polyfit(num_oj,a,4);
     p_final = [p_final; p];    
 end
-save('p_Tau_64_800.txt','p_final','-ascii');
+out_path = append("p_Tau_", num2str(TAU_M), ' ', num2str(end_time), ".txt");
+save(out_path,'p_final','-ascii');
