@@ -1,7 +1,7 @@
 #  Spike-Train level Recurrent Spiking Neural Networks Backpropagation (ST-RSBP) for SNNs
 This repo is the CUDA implementation of SNNs trained the Spike-Train level RSNNs Backpropagation, modified based on <a href="https://github.com/jinyyy666/mm-bp-snn">HM2-BP</a> for spiking neuron networks.
 
-The paper is accepted by the Thirty-third Conference on Neural Information Processing Systems, 2019.
+The paper <a href="https://arxiv.org/abs/1908.06378">Spike-Train Level Backpropagation for Training Deep Recurrent Spiking Neural Networks</a> is accepted by the Thirty-third Conference on Neural Information Processing Systems, 2019.
 
 Contact <stonezwr@gmail.com> if you have any questions or concerns.
 
@@ -98,3 +98,4 @@ Do the following to set up compilation environment.
 * The SNNs are implemented in terms of layers. User can config the SNNs by using configuration files in Config/
 * The program will save the best test result and save the network weight in the file "Result/checkPoint.txt", If the program exit accidentally, you can continue the program form this checkpoint.
 * The logs for the reported performance and the settings can be found in [Result](https://github.com/stonezwr/ST-RSBP/tree/master/Result) folder.
+* Only batch size = 1 is used in the experiments. Other value of batch size may cause problem.
