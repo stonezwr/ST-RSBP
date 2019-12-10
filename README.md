@@ -1,7 +1,7 @@
 #  Spike-Train level Recurrent Spiking Neural Networks Backpropagation (ST-RSBP) for SNNs
 This repo is the CUDA implementation of SNNs trained the Spike-Train level RSNNs Backpropagation, modified based on <a href="https://github.com/jinyyy666/mm-bp-snn">HM2-BP</a> for spiking neuron networks.
 
-The paper <a href="https://arxiv.org/abs/1908.06378">Spike-Train Level Backpropagation for Training Deep Recurrent Spiking Neural Networks</a> is accepted by the Thirty-third Conference on Neural Information Processing Systems, 2019.
+The paper <a href="http://papers.nips.cc/paper/8995-spike-train-level-backpropagation-for-training-deep-recurrent-spiking-neural-networks">Spike-Train Level Backpropagation for Training Deep Recurrent Spiking Neural Networks</a> is accepted by the Thirty-third Conference on Neural Information Processing Systems, 2019.
 
 Contact <stonezwr@gmail.com> if you have any questions or concerns.
 
